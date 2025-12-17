@@ -6,6 +6,7 @@ BUILD_PATH = build
 SRC = main.cpp\
       Zombie.cpp\
       newZombie.cpp\
+      randomChump.cpp\
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
