@@ -10,10 +10,10 @@ public :
 	Zombie	(const Zombie &other);
 	Zombie	&operator=(const Zombie &other);
 	~Zombie	(void);
-private:
-	std::string	_name;
 
 	void	announce(void);
+private:
+	std::string	_name;
 };
 
 #endif
