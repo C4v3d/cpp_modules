@@ -13,8 +13,6 @@ private:
 
 public:
 	Contact();
-	// Contact(const Contact &other);
-	// Contact& operator=(const Contact &other);
 	~Contact();
 
 	void		SetFirstName(std::string fname);
