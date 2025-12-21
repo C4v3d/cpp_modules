@@ -5,11 +5,12 @@ BUILD_PATH = build
 
 SRC = main.cpp\
       HumanA.cpp\
+      HumanB.cpp\
       Weapon.cpp\
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
-NAME = brain
+NAME = human
 
 all: $(NAME)
 
