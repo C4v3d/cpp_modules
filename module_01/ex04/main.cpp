@@ -2,25 +2,19 @@
 #include <fstream>
 #include <string>
 
-#include <cstdlib>
 void	process_line(std::string& line, const std::string toFind, const std::string s) {
 	int		pos;
 	size_t		len = toFind.size();
 	std::string	newString;
 	std::string	tmp;
 
-
-	std::cout << len << std::endl;
 	do {
 		pos = line.find(toFind);
 		if (pos >= 0) {
-			newString = line.substr(0, pos); // First half of the string
+			newString = line.substr(0, pos);
 			newString.append(s);
 			tmp = line.substr(pos + len, line.size());
-			std::cout << "newString: " << newString << std::endl;
-			std::cout << "tmp: " << tmp << std::endl;
 			newString.append(tmp);
-			std::cout << newString << std::endl;
 			line.swap(newString);
 		}
 	} while (pos >= 0);
@@ -47,7 +41,7 @@ int	main(int ac, char **av) {
 	(void)av;
 	try {
 		if (ac == 4)
-			sedding(av[1], av[2], av[3]);// Do something
+			sedding(av[1], av[2], av[3]);
 		else
 			throw (ac);
 	}
