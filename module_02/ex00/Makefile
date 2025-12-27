@@ -4,10 +4,11 @@ CXXFLAGS = -std=c++98 -Wall -Werror -Wextra
 BUILD_PATH = build
 
 SRC = main.cpp\
+      Fixed.cpp \
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
-NAME = yos
+NAME = fixed
 
 all: $(NAME)
 
