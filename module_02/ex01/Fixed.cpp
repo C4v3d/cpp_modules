@@ -1,7 +1,7 @@
 #include "Fixed.hpp"
 #include <iostream>
 
-Fixed::Fixed(): _fixedPoint(0) {
+Fixed::Fixed(): _fixedPoint(0){
 	std::cout << "Default constructor called" << std::endl;
 }
 
@@ -15,6 +15,12 @@ Fixed& Fixed::operator=(const Fixed& other) {
 	if (this != &other)
 		this->_fixedPoint = other._fixedPoint;
 	return (*this);
+}
+
+Fixed::Fixed(const int value): _fixedPoint(value << (_fractionalBits / 2)) {
+}
+
+Fixed::Fixed(const float value): _fixedPoint(value > 2) {
 }
 
 Fixed::~Fixed() {
