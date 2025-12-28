@@ -1,10 +1,21 @@
 #include "Fixed.hpp"
 #include <iostream>
 
+#include <bitset>
+
 int	main(void) {
 
-	Fixed	a(13);
+	int	a = 13;
+	std::bitset<16>	ab(a);
 
-	std::cout << a.getRawBits() << std::endl;
+	std::cout << "a decimal value: " << a << std::endl;
+	std::cout << "a binary value: " << ab << std::endl;
+
+	std::cout << "Shifting !" << std::endl;
+
+	a = a << 8;
+	std::bitset<16> cb(a);
+	std::cout << "a decimal value: " << a << std::endl;
+	std::cout << "a binary value: " << cb << std::endl;
 	return (0);
 }
