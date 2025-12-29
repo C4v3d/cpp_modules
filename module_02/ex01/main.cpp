@@ -1,21 +1,24 @@
 #include "Fixed.hpp"
 #include <iostream>
 
-#include <bitset>
+#include <cmath>
 
 int	main(void) {
 
-	int	a = 13;
-	std::bitset<16>	ab(a);
+	Fixed	a;
+	Fixed const	b(10);
+	Fixed const 	c(42.42f);
+	Fixed const	d(b);
 
-	std::cout << "a decimal value: " << a << std::endl;
-	std::cout << "a binary value: " << ab << std::endl;
+	a = Fixed(1234.4321f);
 
-	std::cout << "Shifting !" << std::endl;
-
-	a = a << 8;
-	std::bitset<16> cb(a);
-	std::cout << "a decimal value: " << a << std::endl;
-	std::cout << "a binary value: " << cb << std::endl;
+	std::cout << "a is " << a << std::endl;
+	std::cout << "b is " << b << std::endl;
+	std::cout << "c is " << c << std::endl;
+	std::cout << "d is " << d << std::endl;
+	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
+	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
+	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
+	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
 	return (0);
 }
