@@ -8,16 +8,16 @@ class Fixed {
 		Fixed	();
 		Fixed	(const Fixed& other);
 		Fixed&	operator=(const Fixed& other);
-
 		Fixed	(const int value);
 		Fixed	(const float value);
-		std::ostream&	operator<<(std::ostream& output, const Fixed& fixed);
 		~Fixed	();
 
 		int	getRawBits(void);
 		void	setRawBits(int const raw);
 		float	toFloat(void) const;
 		int	toInt(void) const;
+
+		friend	std::ostream&	operator<<(std::ostream& output, const Fixed& fixed);
 
 	private:
 		int			_fixedPoint;
