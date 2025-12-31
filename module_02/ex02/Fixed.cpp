@@ -30,7 +30,7 @@ Fixed::~Fixed() {
 	std::cout << "Destructor called" << std::endl;
 }
 
-int	Fixed::getRawBits(void) {
+int	Fixed::getRawBits(void) const {
 	std::cout << "getRawBits member function called" << std::endl;
 	return (this->_fixedPoint);
 }
@@ -47,7 +47,75 @@ int	Fixed::toInt(void) const {
 	return(this->_fixedPoint >> _fractionalBits);
 }
 
+/* Insert Overload */
 std::ostream&	operator<<(std::ostream& output, const Fixed& fixed) {
 	output << fixed.toFloat();
 	return (output);
+}
+/* Comparison Overload */
+bool	Fixed::operator<(const Fixed& other) const {
+	return (this->_fixedPoint < other._fixedPoint);
+}
+
+bool	Fixed::operator>(const Fixed& other) const {
+	return (this->_fixedPoint > other._fixedPoint);
+}
+
+bool	Fixed::operator<=(const Fixed& other) const {
+	return (this->_fixedPoint <= other._fixedPoint);
+}
+
+bool	Fixed::operator>=(const Fixed& other) const {
+	return (this->_fixedPoint >= other._fixedPoint);
+}
+
+bool	Fixed::operator==(const Fixed& other) const {
+	return (this->_fixedPoint == other._fixedPoint);
+}
+
+bool	Fixed::operator!=(const Fixed& other) const {
+	return (this->_fixedPoint != other._fixedPoint);
+}
+
+/* Arithmetic Overload */
+Fixed	Fixed::operator+(const Fixed& other) const {
+	Fixed	res = this->_fixedPoint + other._fixedPoint;
+	return (res);
+}
+
+Fixed	Fixed::operator-(const Fixed& other) const {
+	Fixed res = this->_fixedPoint - other._fixedPoint;
+	return (res);
+}
+
+Fixed	Fixed::operator*(const Fixed& other) const {
+	Fixed res = this->_fixedPoint * other._fixedPoint;
+	return (res);
+}
+
+Fixed	Fixed::operator/(const Fixed& other) const {
+	Fixed res = this->_fixedPoint / other._fixedPoint;
+	return (res);
+}
+
+Fixed&	Fixed::operator++(void) {
+	this->_fixedPoint++;
+	return (*this);
+}
+
+Fixed	Fixed::operator++(int) {
+	Fixed	tmp = *this;
+	this->_fixedPoint++;
+	return (tmp);
+}
+
+Fixed& Fixed::operator--(void) {
+	this->_fixedPoint--;
+	return (*this);
+}
+
+Fixed Fixed::operator--(int) {
+	Fixed	tmp = *this;
+	this->_fixedPoint--;
+	return (tmp);
 }
