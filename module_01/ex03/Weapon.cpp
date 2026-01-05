@@ -1,18 +1,10 @@
 #include "Weapon.hpp"
 #include <string>
 
-#include <iostream>
-
 Weapon::Weapon() {
 }
 
 Weapon::Weapon(std::string type): _type(type){
-}
-
-Weapon&	Weapon::operator=(const Weapon& other) {
-	if (this != &other)
-		this->_type = other._type;
-	return (*this);
 }
 
 Weapon::~Weapon() {

@@ -34,11 +34,12 @@ void	sedding(std::string fileName, std::string toReplace, std::string s) {
 		 process_line(line, toReplace, s);
 		 writeFile << line << std::endl;
 	}
+	readFile.close();
+	writeFile.close();
 }
 
 int	main(int ac, char **av) {
 
-	(void)av;
 	try {
 		if (ac == 4)
 			sedding(av[1], av[2], av[3]);
