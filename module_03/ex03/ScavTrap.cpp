@@ -3,9 +3,9 @@
 
 ScavTrap::ScavTrap(const std::string name): ClapTrap(name) {
 	std::cout << "Creating ScavTrap: " << name << " from ClapTrap" << std::endl;
-	ClapTrap::_hitPoints = _hitPoints;
-	ClapTrap::_energyPoints = _energyPoints;
-	ClapTrap::_attackDamage = _attackDamage;
+	this->_hitPoints = _defHitPoints;
+	this->_energyPoints = _defEnergyPoints;
+	this->_attackDamage = _defAttackDamage;
 
 }
 
