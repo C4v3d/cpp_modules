@@ -3,9 +3,10 @@
 
 ScavTrap::ScavTrap(const std::string name): ClapTrap(name) {
 	std::cout << "Creating ScavTrap: " << name << " from ClapTrap" << std::endl;
-	_hitPoints = 100;
-	_energyPoints = 50;
-	_attackDamage = 20;
+	ClapTrap::_hitPoints = _hitPoints;
+	ClapTrap::_energyPoints = _energyPoints;
+	ClapTrap::_attackDamage = _attackDamage;
+
 }
 
 ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other) {
@@ -14,10 +15,7 @@ ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other) {
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& other) {
 	if (this != &other){
-		this->_name = other._name;
-		this->_hitPoints = other._hitPoints;
-		this->_energyPoints = other._energyPoints;
-		this->_attackDamage = other._attackDamage;
+		ClapTrap::operator=(other);
 	}
 	return (*this);
 }

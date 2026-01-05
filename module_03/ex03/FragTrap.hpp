@@ -14,6 +14,7 @@ class FragTrap : virtual public ClapTrap {
 		void	highFivesGuys(void);
 	private:
 
+
 };
 
 #endif
