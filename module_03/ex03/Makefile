@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++98 -Wall -Werror -Wextra
+CXXFLAGS = -std=c++98 -Wall -Werror -Wextra -Wshadow
 
 BUILD_PATH = build
 
