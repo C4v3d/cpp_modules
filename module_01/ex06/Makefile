@@ -8,7 +8,7 @@ SRC = main.cpp\
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
-NAME = harl
+NAME = harlFilter
 
 all: $(NAME)
 
