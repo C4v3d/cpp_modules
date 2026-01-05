@@ -10,6 +10,8 @@ int	main(void) {
 	const Animal* j = new Dog();
 	const Animal* i = new Cat();
 
+	// Animal test; Can't be instantiable because it is an abstract class
+
 	std::cout << "\nDeleting them\n" << std::endl;
 
 	delete j;//should not create a leak
