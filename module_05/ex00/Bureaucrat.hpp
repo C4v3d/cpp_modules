@@ -16,6 +16,7 @@ class Bureaucrat {
 		void		incrGrade();
 		void		decrGrade();
 
+		/* Can't use friend key word */
 		friend std::ostream&	operator<<(std::ostream& out, const Bureaucrat& bureaucrat);
 
 	private:

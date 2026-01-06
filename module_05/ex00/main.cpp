@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "GradeTooHigh.hpp"
 #include <iostream>
 
 int	main(void) {
@@ -40,7 +41,7 @@ int	main(void) {
 		Bureaucrat	d("Stanley", 151);
 	}
 	catch (const std::exception& e) {
-		std::cerr << "Excpetion: " << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	}
 	return (0);
 }
