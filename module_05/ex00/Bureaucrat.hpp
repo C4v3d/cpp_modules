@@ -10,20 +10,15 @@ class Bureaucrat {
 		Bureaucrat&	operator=(const Bureaucrat& other);
 		~Bureaucrat(void);
 
-		std::string	getName() const;
-		short		getGrade() const;
+		const std::string	getName() const;
+		short			getGrade() const;
 
-		void		incrGrade();
-		void		decrGrade();
-
-		/* Can't use friend key word */
-		friend std::ostream&	operator<<(std::ostream& out, const Bureaucrat& bureaucrat);
+		void			incrGrade();
+		void			decrGrade();
 
 	private:
 		std::string const	_name;
 		short			_grade;
-
-		void			grader();
 };
 
 #endif
