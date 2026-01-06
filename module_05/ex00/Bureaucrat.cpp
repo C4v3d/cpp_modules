@@ -5,10 +5,10 @@
 
 Bureaucrat::Bureaucrat(const std::string& name, short grade): _name(name), _grade(grade){
 	if (_grade < 1) {
-		throw GradeTooHigh("[Out of scope] Grade is too High");
+		throw GradeTooHigh("[Out of bound] Grade is too High");
 	}
 	if (_grade > 150) {
-		throw GradeTooLow("[Out of scope] Grade is too Low");
+		throw GradeTooLow("[Out of bound] Grade is too Low");
 	}
 }
 
@@ -27,7 +27,7 @@ Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& other) {
 Bureaucrat::~Bureaucrat() {
 }
 
-std::string	Bureaucrat::getName() const {
+const std::string	Bureaucrat::getName() const {
 	return (_name);
 }
 
@@ -43,7 +43,7 @@ void	Bureaucrat::incrGrade() {
 	}
 	catch (short grade) {
 		std::cout << "(" << grade << ")"
-			<< " Incrementation result in out of bound grade ! (1 - 150)\n" << std::endl;
+			<< " Promotion result in out of bound grade ! (1 - 150)\n" << std::endl;
 	}
 }
 
@@ -55,11 +55,6 @@ void	Bureaucrat::decrGrade() {
 	}
 	catch (short grade) {
 		std::cout << "(" << grade << ")"
-			<< " Decrementation result in out of bound grade ! (1 - 150)\n" << std::endl;
+			<< " De-ranking result in out of bound grade ! (1 - 150)\n" << std::endl;
 	}
-}
-
-std::ostream&	operator<<(std::ostream& out, const Bureaucrat& bureaucrat) {
-	out << bureaucrat._name << ", bureaucrat grade " << bureaucrat._grade;
-	return (out);
 }
