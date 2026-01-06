@@ -24,6 +24,11 @@ void	sedding(std::string fileName, std::string toReplace, std::string s) {
 	std::ifstream	readFile(fileName.c_str(), std::ios_base::in);
 	std::string	line;
 
+	if (toReplace == s) {
+		std::cout << "Strings must be different." << std::endl;
+		readFile.close();
+		return ;
+	}
 	if (!readFile.is_open()) {
 		std::cout << "File does not exist or can't be opened" << std::endl;
 		return ;
