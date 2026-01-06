@@ -4,7 +4,7 @@
 #include <string>
 #include <exception>
 
-class GradeTooLow : std::exception {
+class GradeTooLow : public std::exception {
 	public:
 		GradeTooLow(const std::string& message);
 		virtual ~GradeTooLow() throw();

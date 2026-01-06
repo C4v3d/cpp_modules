@@ -2,14 +2,14 @@
 #include "GradeTooHigh.hpp"
 #include "GradeTooLow.hpp"
 #include <iostream>
-#include <stdexcept>
 
-
-Bureaucrat::Bureaucrat(const std::string& name, short grade): _name(name), _grade(grade) {
-	if (_grade < 1)
+Bureaucrat::Bureaucrat(const std::string& name, short grade): _name(name), _grade(grade){
+	if (_grade < 1) {
 		throw GradeTooHigh("[Out of scope] Grade is too High");
-	if (_grade > 150)
+	}
+	if (_grade > 150) {
 		throw GradeTooLow("[Out of scope] Grade is too Low");
+	}
 }
 
 
