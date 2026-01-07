@@ -5,8 +5,6 @@ BUILD_PATH = build
 
 SRC = main.cpp\
       Bureaucrat.cpp \
-      GradeTooLow.cpp \
-      GradeTooHigh.cpp \
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 

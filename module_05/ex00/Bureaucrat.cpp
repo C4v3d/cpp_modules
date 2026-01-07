@@ -1,17 +1,14 @@
 #include "Bureaucrat.hpp"
-#include "GradeTooHigh.hpp"
-#include "GradeTooLow.hpp"
 #include <iostream>
 
 Bureaucrat::Bureaucrat(const std::string& name, short grade): _name(name), _grade(grade){
 	if (_grade < 1) {
-		throw GradeTooHigh("[Out of bound] Grade is too High");
+		throw Bureaucrat::GradeTooHighException();
 	}
 	if (_grade > 150) {
-		throw GradeTooLow("[Out of bound] Grade is too Low");
+		throw Bureaucrat::GradeTooLowException();
 	}
 }
-
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other): _name(other._name) {
 	*this = other;
@@ -57,4 +54,24 @@ void	Bureaucrat::decrGrade() {
 		std::cout << "(" << grade << ")"
 			<< " De-ranking result in out of bound grade ! (1 - 150)\n" << std::endl;
 	}
+}
+
+Bureaucrat::GradeTooLowException::GradeTooLowException(): _message("[ Out of bound ] Grade is too low") {
+}
+
+Bureaucrat::GradeTooLowException::~GradeTooLowException() throw() {
+}
+
+const char*	Bureaucrat::GradeTooLowException::what() const throw() {
+	return (_message.c_str());
+}
+
+Bureaucrat::GradeTooHighException::GradeTooHighException(): _message("[ Out of bound ] Grade is too High") {
+}
+
+Bureaucrat::GradeTooHighException::~GradeTooHighException() throw() {
+}
+
+const char*	Bureaucrat::GradeTooHighException::what() const throw() {
+	return (_message.c_str());
 }
