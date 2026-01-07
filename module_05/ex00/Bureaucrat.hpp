@@ -19,6 +19,26 @@ class Bureaucrat {
 	private:
 		std::string const	_name;
 		short			_grade;
+
+		class GradeTooLowException : public std::exception {
+			public:
+				GradeTooLowException();
+				~GradeTooLowException() throw();
+
+				const char*	what() const throw();
+			private:
+				std::string	_message;
+		};
+
+		class GradeTooHighException : public std::exception {
+			public:
+				GradeTooHighException();
+				~GradeTooHighException() throw();
+
+				const char*	what() const throw();
+			private:
+				std::string	_message;
+		};
 };
 
 #endif
