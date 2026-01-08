@@ -37,13 +37,10 @@ void	Harl::complain(std::string level) {
 	switch (opCode) {
 		case 0:
 			(this->*funcPtr[0])();
-			[[fallthrough]];
 		case 1:
 			(this->*funcPtr[1])();
-			[[fallthrough]];
 		case 2:
 			(this->*funcPtr[2])();
-			[[fallthrough]];
 		case 3:
 			(this->*funcPtr[3])();
 			break;
