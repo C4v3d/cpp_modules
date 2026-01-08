@@ -27,16 +27,6 @@ ClapTrap::~ClapTrap(void) {
 	std::cout << "Destroying ClapTrap: "<< this->_name << std::endl;
 }
 
-std::ostream&	operator<<(std::ostream& output, const ClapTrap& clapTrap) {
-	output << std::setw(20) << std::setfill('-') << "\n"
-		<< "Name: " << clapTrap._name << "\n"
-		<< "Hit point(s): " << clapTrap._hitPoints << "\n"
-		<< "Energy point(s): " << clapTrap._energyPoints << "\n"
-		<< "Attack damage: " << clapTrap._attackDamage << "\n"
-		<< std::setw(20) << std::setfill('-') << "\n" << std::endl;
-	return (output);
-}
-
 void	ClapTrap::attack(const std::string& target) {
 	if (this->_hitPoints == 0) {
 		std::cout << "This ClapTrap is dead." << std::endl;
