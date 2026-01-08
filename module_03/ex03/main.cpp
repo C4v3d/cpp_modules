@@ -4,8 +4,7 @@
 
 int	main(void) {
 	DiamondTrap	a("Rick");
-	
-	std::cout << a << std::endl;
+
 	a.attack("someone");
 	a.guardGate();
 	a.highFivesGuys();

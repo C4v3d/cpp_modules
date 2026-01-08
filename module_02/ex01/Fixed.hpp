@@ -17,11 +17,12 @@ class Fixed {
 		float	toFloat(void) const;
 		int	toInt(void) const;
 
-		friend	std::ostream&	operator<<(std::ostream& output, const Fixed& fixed);
+		
 
 	private:
 		int			_fixedPoint;
 		static const int	_fractionalBits = 8;
 };
+std::ostream&	operator<<(std::ostream& output, const Fixed& fixed);
 
 #endif
