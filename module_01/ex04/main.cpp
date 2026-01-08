@@ -28,6 +28,11 @@ void	sedding(std::string fileName, std::string toReplace, std::string s) {
 		std::cout << "File does not exist or can't be opened" << std::endl;
 		return ;
 	}
+	if (toReplace.empty() || s.empty()) {
+		std::cout << "strings can't be empty" << std::endl;
+		readFile.close();
+		return ;
+	}
 	if (toReplace == s) {
 		std::cout << "Strings must be different." << std::endl;
 		readFile.close();
