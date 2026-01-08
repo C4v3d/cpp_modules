@@ -26,9 +26,23 @@ class Form {
 		const int		_execGrade;
 
 		class GradeTooHighException : public std::exception {
+			public:
+				GradeTooHighException();
+				~GradeTooHighException() throw();
+
+				const char*	what() const throw();
+			private:
+				std::string&	_message;
 		};
 
 		class GradeTooLowException : public std::exception {
+			public:
+				GradeTooLowException();
+				~GradeTooLowException();
+
+				const char*	what() const throw();
+			private:
+				std::string&	_message;
 		};
 
 };
