@@ -1,8 +1,9 @@
 #ifndef FORM_HPP
 # define FORM_HPP
 
-#include "Bureaucrat.hpp"
 #include <string>
+
+class Bureaucrat;
 
 class Form {
 	public:
@@ -31,5 +32,7 @@ class Form {
 		};
 
 };
+
+std::ostream&	operator<<(std::ostream& out, const Form& form);
 
 #endif
