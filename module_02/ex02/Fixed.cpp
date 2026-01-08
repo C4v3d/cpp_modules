@@ -80,13 +80,13 @@ bool	Fixed::operator!=(const Fixed& other) const {
 /* Arithmetic Overload */
 Fixed	Fixed::operator+(const Fixed& other) const {
 	Fixed	res;
-	res._fixedPoint = (_fixedPoint + other._fixedPoint) >> _fractionalBits;
+	res._fixedPoint = (_fixedPoint + other._fixedPoint);
 	return (res);
 }
 
 Fixed	Fixed::operator-(const Fixed& other) const {
 	Fixed res;
-	res._fixedPoint = (_fixedPoint - other._fixedPoint) >> _fractionalBits;
+	res._fixedPoint = (_fixedPoint - other._fixedPoint);
 	return (res);
 }
 
