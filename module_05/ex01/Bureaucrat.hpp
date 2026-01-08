@@ -3,6 +3,7 @@
 
 #include <string>
 
+class Form;
 class Bureaucrat {
 	public:
 		Bureaucrat(const std::string& name, const int& grade);
@@ -15,6 +16,8 @@ class Bureaucrat {
 
 		void			incrGrade();
 		void			decrGrade();
+
+		void			signForm(Form& form) const;
 
 	private:
 		std::string const	_name;
@@ -40,5 +43,7 @@ class Bureaucrat {
 				std::string	_message;
 		};
 };
+
+std::ostream&	operator<<(std::ostream& out, const Bureaucrat&);
 
 #endif
