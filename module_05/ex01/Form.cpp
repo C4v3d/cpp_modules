@@ -80,6 +80,9 @@ void	Form::beSigned(const Bureaucrat& bureaucrat) {
 	}
 }
 
+Form::GradeTooHighException::GradeTooHighException() _message("[ Grade too low ] Cannot sign") {
+}
+
 std::ostream&	operator<<(std::ostream& out, const Form& form) {
 	out << "Form: " << form.getName() << "\nSign grade: " << form.getSignGrade()
 		<< "\nExec grade: " << form.getExecGrade()
