@@ -3,8 +3,19 @@
 #include <fstream>
 
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string& name): 
-	AForm(name, 145, 137) {
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target): 
+	AForm("shrub", 145, 137), _target(target) {
+}
+
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other):
+	AForm(other.getName(), getSignGrade(), getExecGrade()), _target(other._target) {
+		*this = other;
+}
+
+ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other) {
+	(void)other;
+	std::cout << "Forms are constant thus they cannot be changed after creation" << std::endl;
+	return (*this);
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {
@@ -44,7 +55,7 @@ void	plantASeed(std::string target) {
 void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const{
 	try {
 		AForm::execute(executor);
-		plantASeed(getName());
+		plantASeed(_target);
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
