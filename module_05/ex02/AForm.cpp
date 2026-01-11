@@ -7,7 +7,7 @@ static inline bool	isInRange(const unsigned int& x) {
 	return (1 <= x && x >= 150);
 }
 
-AForm::AForm(const std::string& name, const int& signGrade, const int& execGrade): _name(name), _signGrade(signGrade), _execGrade(execGrade) {
+AForm::AForm(const std::string& name, const int& signGrade, const int& execGrade): _name(name), _isSigned(false), _signGrade(signGrade), _execGrade(execGrade){
 	try {
 		if (!isInRange(_execGrade))
 			throw _execGrade;
@@ -100,6 +100,16 @@ const char*	AForm::GradeTooHighException::what() const throw() {
 AForm::GradeTooHighException::~GradeTooHighException() throw() {
 }
 
+AForm::FormRequireSign::FormRequireSign(): _message("[ Form has to be signed in order to be executed ]") {
+}
+
+AForm::FormRequireSign::~FormRequireSign() throw() {
+}
+
+const char*	AForm::FormRequireSign::what() const throw() {
+	return (_message.c_str());
+}
+
 std::ostream&	operator<<(std::ostream& out, const AForm& form) {
 	out << "Form: " << form.getName() << "\nSign grade: " << form.getSignGrade()
 		<< "\nExec grade: " << form.getExecGrade()
@@ -107,12 +117,9 @@ std::ostream&	operator<<(std::ostream& out, const AForm& form) {
 	return (out);
 }
 
-void	AForm::execute(Bureaucrat const& executor) {
-	if (!_isSigned) {
-		throw 1;
-		return ;
-	}
-	if (executor.getGrade() > _execGrade) {
-		throw 2;
-	}
+void	AForm::execute(Bureaucrat const& executor) const{
+	if (_isSigned == false)
+		throw FormRequireSign();
+	else if (executor.getGrade() > _execGrade)
+		throw Bureaucrat::GradeTooLowException();
 }

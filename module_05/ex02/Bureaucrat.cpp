@@ -50,7 +50,7 @@ void Bureaucrat::decrGrade() {
 }
 
 Bureaucrat::GradeTooLowException::GradeTooLowException()
-    : _message("[ Out of bound ] Grade is too low") {}
+    : _message("[ Grade is too low ]") {}
 
 Bureaucrat::GradeTooLowException::~GradeTooLowException() throw() {}
 
@@ -59,7 +59,7 @@ const char *Bureaucrat::GradeTooLowException::what() const throw() {
 }
 
 Bureaucrat::GradeTooHighException::GradeTooHighException()
-    : _message("[ Out of bound ] Grade is too High") {}
+    : _message("[ Grade is too High ]") {}
 
 Bureaucrat::GradeTooHighException::~GradeTooHighException() throw() {}
 
@@ -77,6 +77,11 @@ void Bureaucrat::signForm(AForm &form) const {
 		  std::cout << _name << " couldn't sign " << form.getName() << " because his grade is too low." << std::endl;
   }
 }
+
+void	Bureaucrat::executeForm(const AForm& form) {
+	form.execute(*this);
+}
+
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &obj) {
   out << obj.getName() << ", bureaucrat grade " << obj.getGrade() << std::endl;
