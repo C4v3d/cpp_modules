@@ -25,6 +25,16 @@ class Form {
 		const int		_signGrade;
 		const int		_execGrade;
 
+		class GradeTooLowException : public std::exception {
+			public:
+				GradeTooLowException();
+				~GradeTooLowException() throw();
+
+				const char*	what() const throw();
+			private:
+				std::string	_message;
+		};
+
 		class GradeTooHighException : public std::exception {
 			public:
 				GradeTooHighException();
@@ -32,17 +42,7 @@ class Form {
 
 				const char*	what() const throw();
 			private:
-				std::string&	_message;
-		};
-
-		class GradeTooLowException : public std::exception {
-			public:
-				GradeTooLowException();
-				~GradeTooLowException();
-
-				const char*	what() const throw();
-			private:
-				std::string&	_message;
+				std::string	_message;
 		};
 
 };
