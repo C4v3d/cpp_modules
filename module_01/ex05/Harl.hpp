@@ -14,8 +14,6 @@ private:
 	void	info(void);
 	void	warning(void);
 	void	error(void);
-
-	void	(*selectOp())(void);
 };
 
 #endif
