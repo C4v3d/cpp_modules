@@ -9,6 +9,7 @@ int	main(void) {
 		Bureaucrat	john("John", 10);
 		ShrubberyCreationForm	shform("shrub");
 
+		john.signForm(shform);
 		john.executeForm(shform);
 
 	}
