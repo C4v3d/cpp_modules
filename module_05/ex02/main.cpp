@@ -6,13 +6,11 @@
 int	main(void) {
 
 	try {
-		Bureaucrat	john("John", 43);
-		std::cout << john << std::endl;
-		Bureaucrat	billy(john);
-		for (int i = 0; i < 10; i++)
-			billy.incrGrade();
-		ShrubberyCreationForm	forma("test");
-		
+		Bureaucrat	john("John", 10);
+		ShrubberyCreationForm	shform("shrub");
+
+		john.executeForm(shform);
+
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << std::endl;

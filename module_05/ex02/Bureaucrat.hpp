@@ -17,9 +17,7 @@ class AForm; class Bureaucrat {
 		void			decrGrade();
 
 		void			signForm(AForm& form) const;
-	private:
-		std::string const	_name;
-		int			_grade;
+		void			executeForm(AForm const & form);
 
 		class GradeTooLowException : public std::exception {
 			public:
@@ -40,6 +38,10 @@ class AForm; class Bureaucrat {
 			private:
 				std::string	_message;
 		};
+
+	private:
+		std::string const	_name;
+		int			_grade;
 };
 
 std::ostream&	operator<<(std::ostream& out, const Bureaucrat&);

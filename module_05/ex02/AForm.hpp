@@ -19,7 +19,7 @@ class AForm {
 
 		void			beSigned(const Bureaucrat& bureaucrat);
 
-		virtual void		execute(Bureaucrat const& executor) = 0;
+		virtual void		execute(Bureaucrat const& executor) const = 0;
 
 	private:
 		const std::string	_name;
@@ -41,6 +41,15 @@ class AForm {
 			public:
 				GradeTooHighException();
 				~GradeTooHighException() throw();
+
+				const char*	what() const throw();
+			private:
+				std::string	_message;
+		};
+		class FormRequireSign : public std::exception {
+			public:
+				FormRequireSign();
+				~FormRequireSign() throw();
 
 				const char*	what() const throw();
 			private:
