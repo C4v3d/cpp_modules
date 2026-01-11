@@ -7,6 +7,7 @@ SRC = main.cpp\
       Bureaucrat.cpp \
       AForm.cpp \
       ShrubberyCreationForm.cpp \
+      RobotomyRequestForm.cpp \
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
