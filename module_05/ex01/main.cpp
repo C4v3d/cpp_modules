@@ -5,15 +5,25 @@
 int	main(void) {
 
 	try {
-		Bureaucrat	bur("Billy", 43);
+		Bureaucrat	john("John", 43);
 		Form		form("sign this", 40, 40);
 
-		std::cout << bur << std::endl;
+		std::cout << john << std::endl;
 		std::cout << form << std::endl;
 
-		bur.signForm(form);
+		john.signForm(form);
 
 		std::cout << form << std::endl;
+
+		Bureaucrat	billy(john);
+		billy.signForm(form);
+		for (int i = 0; i < 10; i++)
+			billy.incrGrade();
+		billy.signForm(form);
+		std::cout << form << std::endl;
+		john.signForm(form);
+
+		Form wrongForm("wrongForm", 2, 400);
 
 	}
 	catch (const std::exception& e) {
