@@ -13,6 +13,8 @@ int	main(void) {
 
 		bur.signForm(form);
 
+		std::cout << form << std::endl;
+
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << std::endl;

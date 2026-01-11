@@ -73,14 +73,32 @@ void	Form::beSigned(const Bureaucrat& bureaucrat) {
 	try {
 		if (bureaucrat.getGrade() > _signGrade)
 			throw Form::GradeTooLowException();
+		std::cout << "what" << std::endl;
 		_isSigned = true;
 	}
 	catch (const std::exception& e) {
-		std::cout << e.what() << std::endl;
+		throw 1;
 	}
 }
 
-Form::GradeTooHighException::GradeTooHighException() _message("[ Grade too low ] Cannot sign") {
+Form::GradeTooLowException::GradeTooLowException(): _message("[ Grade too low ] Cannot sign") {
+}
+
+const char*	Form::GradeTooLowException::what() const throw() {
+	return (_message.c_str());
+}
+
+Form::GradeTooLowException::~GradeTooLowException() throw() {
+}
+
+Form::GradeTooHighException::GradeTooHighException(): _message("[ Grade too high ] Cannot sign") {
+}
+
+const char*	Form::GradeTooHighException::what() const throw() {
+	return (_message.c_str());
+}
+
+Form::GradeTooHighException::~GradeTooHighException() throw() {
 }
 
 std::ostream&	operator<<(std::ostream& out, const Form& form) {
