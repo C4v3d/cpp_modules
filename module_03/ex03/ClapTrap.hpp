@@ -20,9 +20,6 @@ class ClapTrap {
 		virtual void	attack(const std::string& target);
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
-
-		friend std::ostream&	operator<<(std::ostream& output, const ClapTrap& clapTrap);
-		
-	private:
 };
+
 #endif
