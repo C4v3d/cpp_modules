@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 RobotomyRequestForm::RobotomyRequestForm(std::string const & target):
-	AForm("Robotomy", 72, 45), _target(target) {
+	AForm("Robotomy Request Form", 72, 45), _target(target) {
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm & other):
@@ -33,5 +33,6 @@ void	RobotomyRequestForm::execute(Bureaucrat const & executor) const {
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
+		throw 1;
 	}
 }
