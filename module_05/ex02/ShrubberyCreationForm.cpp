@@ -4,7 +4,7 @@
 
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target): 
-	AForm("shrub", 145, 137), _target(target) {
+	AForm("Shrubbery Creation Form", 145, 137), _target(target) {
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other):
@@ -49,7 +49,6 @@ void	plantASeed(std::string target) {
 	}
 	else
 		std::cout << "File couldn't been created" << std::endl;
-
 }
 
 void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const{
@@ -59,5 +58,6 @@ void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const{
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
+		throw ;
 	}
 }
