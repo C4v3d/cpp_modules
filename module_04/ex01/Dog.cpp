@@ -15,6 +15,7 @@ Dog&	Dog::operator=(const Dog& other) {
 	std::cout << "Dog copy assignement called" << std::endl;
 	if (this != &other) {
 		this->type = other.type;
+		_brain = new Brain(*other._brain);
 	}
 	return (*this);
 }
@@ -26,4 +27,12 @@ Dog::~Dog() {
 
 void	Dog::makeSound(void) const {
 	std::cout << "Wouf Wouf" << std::endl;
+}
+
+const std::string&	Dog::getIdea(size_t const & i) const {
+	return (_brain->getIdea(i));
+}
+
+void	Dog::setIdea(std::string const & idea) const {
+	_brain->setIdea(idea);
 }

@@ -3,6 +3,7 @@
 
 #include "WrongAnimal.hpp"
 
+class Brain;
 
 class	WrongCat : virtual public WrongAnimal {
 	public:
@@ -12,6 +13,7 @@ class	WrongCat : virtual public WrongAnimal {
 		~WrongCat();
 	private:
 		void	makeSound(void) const;
+		Brain*	_brain;
 };
 
 #endif
