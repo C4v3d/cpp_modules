@@ -1,4 +1,5 @@
 #include "WrongCat.hpp"
+#include "Brain.hpp"
 #include <iostream>
 
 WrongCat::WrongCat(): WrongAnimal("WrongCat") {
@@ -14,6 +15,7 @@ WrongCat&	WrongCat::operator=(const WrongCat& other) {
 	std::cout << "Wrong Cat copy assignement called" << std::endl; 
 	if (this != &other) {
 		this->type = other.type;
+		_brain = new Brain(*other._brain);
 	}
 	return (*this);
 }

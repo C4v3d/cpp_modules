@@ -14,7 +14,9 @@ Cat::Cat(const Cat& other): Animal("Cat") {
 Cat&	Cat::operator=(const Cat& other) {
 	std::cout << "Copy assignement Cat constructor called" << std::endl;
 	if (this != &other) {
-		this->type = other.type;
+		type = other.type;
+		_brain = new Brain(*other._brain);
+
 	}
 	return (*this);
 }
@@ -26,4 +28,12 @@ Cat::~Cat() {
 
 void	Cat::makeSound(void) const {
 	std::cout << "Mew Mew" << std::endl;
+}
+
+const std::string&	Cat::getIdea(size_t const & i) const {
+	return (_brain->getIdea(i));
+}
+
+void	Cat::setIdea(std::string const & idea) const {
+	_brain->setIdea(idea);
 }

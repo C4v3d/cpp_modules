@@ -12,8 +12,15 @@ int	main(void) {
 
 	std::cout << "\nDeleting them\n" << std::endl;
 
-	delete j;//should not create a leak
+
+	delete j;
 	delete i;
+
+	Dog* bulldog = new Dog();
+
+	bulldog->setIdea("Food");
+	std::cout << bulldog->getIdea(0) << std::endl;
+	delete bulldog;
 
 	std::cout << "\nCreate 6 animals (3 Dog and 3 Cat)\n"  << std::endl;
 	Animal	*animals[6] = {new Dog(), new Dog(), new Dog(),
