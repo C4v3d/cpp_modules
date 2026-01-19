@@ -13,9 +13,9 @@ class Dog : virtual public Animal {
 		~Dog();
 		const std::string&	getIdea(size_t const & i) const;
 		void				setIdea(std::string const & idea) const;
+		void	makeSound(void) const;
 	
 	private:
-		void	makeSound(void) const;
 		Brain*	_brain;
 };
 #endif

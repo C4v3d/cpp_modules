@@ -5,24 +5,31 @@
 #include <iostream>
 
 int	main(void) {
-	std::cout << "Creating a Dog and a Cat\n" << std::endl;
-
-	const Animal* j = new Dog();
-	const Animal* i = new Cat();
-
-	std::cout << "\nDeleting them\n" << std::endl;
-
-
-	delete j;
-	delete i;
-
+	std::cout << "---- Simple brain testing ----\n" << std::endl;
 	Dog* bulldog = new Dog();
-
+	std::cout << "*Setting Ideas (Food)*" << std::endl;
 	bulldog->setIdea("Food");
-	std::cout << bulldog->getIdea(0) << std::endl;
+	std::cout << "The bulldog is thinking about: " << bulldog->getIdea(0) << std::endl;
+	std::cout << "Copying Bulldog" << std::endl;
+	Dog* dog = new Dog(*bulldog);
+	std::cout << "Deleting Bulldog" << std::endl;
 	delete bulldog;
+	std::cout << "Dog is thinking about: " << dog->getIdea(0) << std::endl;
+	delete dog;
 
-	std::cout << "\nCreate 6 animals (3 Dog and 3 Cat)\n"  << std::endl;
+	std::cout << "\n---- Intense brain testing ----\n" << std::endl;
+	Cat* cat = new Cat();
+	cat->makeSound();
+	std::cout << cat->getIdea(0) << std::endl;
+	std::cout << "Filling brain with ideas" << std::endl;
+	for (int i = 0; i < 104; i++) {
+		cat->setIdea("Food");
+	}
+	std::cout << "Checking cat brain:" << cat->getIdea(64) << std::endl;
+	std::cout << "Chhecking out of brain: " << cat->getIdea(101) << std::endl;
+	delete cat;
+
+	std::cout << "\n---- Create 6 animals (3 Dog and 3 Cat) ----\n"  << std::endl;
 	Animal	*animals[6] = {new Dog(), new Dog(), new Dog(),
 				new Cat(), new Cat(), new Cat()};
 

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-Brain::Brain() {
+Brain::Brain(): _index(0) {
 	std::cout << "Brain default constructor called" << std::endl;
 };
 
@@ -17,6 +17,7 @@ Brain&	Brain::operator=(const Brain& other) {
 		for (int i = 0; i < 100; i++) {
 			_ideas[i] = other._ideas[i];
 		}
+		_index = other._index;
 	}
 	return (*this);
 }
@@ -26,15 +27,15 @@ Brain::~Brain() {
 }
 
 const std::string&	Brain::getIdea(size_t const & i) const {
-	if (i > 99 || i > _index) {
-		std::cout << "Index specified is out of bound" << std::endl;
-		return NULL;
+	if (i > 99 || i > _index || _index == 0) {
+		std::cout << "Index specified is out of bound returning first thing that comes in mind" << std::endl;
+		return  (_ideas[0]);
 	}
 	return (_ideas[i]);
 }
 
-void	Brain::setIdea(std::string const & idea) {
-	if (_index == 99) {
+void	Brain::setIdea(std::string const & idea) {	
+	if (_index == 100) {
 		std::cout << "Brain is full of ideas" << std::endl;
 		return ;
 	}
