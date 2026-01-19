@@ -1,8 +1,16 @@
 #include "Intern.hpp"
 #include <iostream>
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 Intern::Intern() {
+	AForm* (Intern::*shrub)(std::string const &) const = &Intern::getShrubberyForm;
+	AForm* (Intern::*robotomy)(std::string const &) const = &Intern::getRobotomyForm;
+	AForm*	(Intern::*pardon)(std::string const &) const = &Intern::getPardonForm;
+	_funcMap["shrubbery request"] = shrub;
+	_funcMap["robotomy request"] = robotomy;
+	_funcMap["pardon request"] = pardon;
 }
 
 Intern::Intern(Intern const & other) {
@@ -19,13 +27,22 @@ Intern&	Intern::operator=(Intern const & other) {
 Intern::~Intern() {
 }
 
-AForm*	Intern::getShrubbereyForm(std::string const & target) const{
+AForm*	Intern::getShrubberyForm(std::string const & target) const{
 	return (new ShrubberyCreationForm(target));
+}
+
+AForm*	Intern::getRobotomyForm(std::string const & target) const {
+	return (new RobotomyRequestForm(target));
+}
+
+AForm*	Intern::getPardonForm(std::string const & target) const {
+	return (new PresidentialPardonForm(target));
 }
 
 AForm*	Intern::makeForm(std::string const & formName, std::string const & target) const {
 	// Needs to intiliaze a form of the requested typed specified by name
 	// then return a pointer to this form;
-	(void)formName;
-	return(getShrubbereyForm(target));
+
+	std::cout << _funcMap.at(formName) << std::endl;
+	return(getShrubberyForm(target));
 }

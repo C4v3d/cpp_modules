@@ -1,4 +1,4 @@
-#ifndef INTERN_HPP
+#ifndef INTERN_HPtP
 # define INTERN_HPP
 
 #include <string>
@@ -9,7 +9,6 @@ class ShrubberyCreationForm;
 class LobotomyRequestForm;
 class PresidentialPardonForm;
 
-
 class Intern {
 	public:
 		Intern();
@@ -19,7 +18,10 @@ class Intern {
 
 		AForm*	makeForm(std::string const & formName, std::string const & target) const;
 	private:
-		AForm*	getShrubbereyForm(std::string const & target) const;
+		std::map<std::string, AForm*(Intern::*)(std::string const &)const> _funcMap;
+		AForm*	getShrubberyForm(std::string const & target) const;
+		AForm*	getRobotomyForm(std::string const & target) const;
+		AForm*	getPardonForm(std::string const & target) const;
 };
 
 #endif
