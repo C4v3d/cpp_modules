@@ -10,7 +10,7 @@ class AForm {
 		AForm(const std::string& name, const int& signGrade, const int& signExec);
 		AForm(const AForm& other);
 		AForm&	operator=(const AForm& other);
-		~AForm();
+		virtual ~AForm();
 
 		const std::string&	getName() const;
 		const bool&		getSignStatus() const;

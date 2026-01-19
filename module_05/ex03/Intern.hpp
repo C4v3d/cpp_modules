@@ -1,4 +1,4 @@
-#ifndef INTERN_HPtP
+#ifndef INTERN_HPP
 # define INTERN_HPP
 
 #include <string>
@@ -22,6 +22,7 @@ class Intern {
 		AForm*	getShrubberyForm(std::string const & target) const;
 		AForm*	getRobotomyForm(std::string const & target) const;
 		AForm*	getPardonForm(std::string const & target) const;
+
 };
 
 #endif

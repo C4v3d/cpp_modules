@@ -5,12 +5,9 @@
 #include "PresidentialPardonForm.hpp"
 
 Intern::Intern() {
-	AForm* (Intern::*shrub)(std::string const &) const = &Intern::getShrubberyForm;
-	AForm* (Intern::*robotomy)(std::string const &) const = &Intern::getRobotomyForm;
-	AForm*	(Intern::*pardon)(std::string const &) const = &Intern::getPardonForm;
-	_funcMap["shrubbery request"] = shrub;
-	_funcMap["robotomy request"] = robotomy;
-	_funcMap["pardon request"] = pardon;
+	_funcMap["shrubbery request"] = &Intern::getShrubberyForm;
+	_funcMap["robotomy request"] = &Intern::getRobotomyForm;
+	_funcMap["pardon request"] = &Intern::getPardonForm;
 }
 
 Intern::Intern(Intern const & other) {
@@ -40,9 +37,12 @@ AForm*	Intern::getPardonForm(std::string const & target) const {
 }
 
 AForm*	Intern::makeForm(std::string const & formName, std::string const & target) const {
-	// Needs to intiliaze a form of the requested typed specified by name
-	// then return a pointer to this form;
-
-	std::cout << _funcMap.at(formName) << std::endl;
-	return(getShrubberyForm(target));
+	std::map<std::string, AForm*(Intern::*)(std::string const &) const>::const_iterator it;
+	it = _funcMap.find(formName);
+	if (it == _funcMap.end()) {
+		std::cout << "Intern cannot create form: " << formName << std::endl;
+		return NULL;
+	}
+	std::cout << "Intern creates " << formName << std::endl;
+    	return (this->*(it->second))(target);
 }
