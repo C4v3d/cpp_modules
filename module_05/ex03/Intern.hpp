@@ -23,6 +23,16 @@ class Intern {
 		AForm*	getRobotomyForm(std::string const & target) const;
 		AForm*	getPardonForm(std::string const & target) const;
 
+	class WrongFormException : public std::exception {
+		public:
+			WrongFormException();
+			~WrongFormException() throw();
+
+			const char*	what() const throw();
+		private:
+			std::string	_message;
+	};
+
 };
 
 #endif

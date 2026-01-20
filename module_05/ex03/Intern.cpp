@@ -38,11 +38,20 @@ AForm*	Intern::getPardonForm(std::string const & target) const {
 
 AForm*	Intern::makeForm(std::string const & formName, std::string const & target) const {
 	std::map<std::string, AForm*(Intern::*)(std::string const &) const>::const_iterator it;
+
 	it = _funcMap.find(formName);
-	if (it == _funcMap.end()) {
-		std::cout << "Intern cannot create form: " << formName << std::endl;
-		return NULL;
-	}
+	if (it == _funcMap.end())
+		throw WrongFormException();
 	std::cout << "Intern creates " << formName << std::endl;
-    	return (this->*(it->second))(target);
+	return (this->*(it->second))(target);
+}
+
+Intern::WrongFormException::WrongFormException(): _message("The specified form does not exist") {
+}
+
+const char*	Intern::WrongFormException::what() const throw() {
+	return (_message.c_str());
+}
+
+Intern::WrongFormException::~WrongFormException() throw() {
 }
