@@ -1,6 +1,8 @@
 #include "Bureaucrat.hpp"
 #include <iostream>
 
+Bureaucrat::Bureaucrat(): _name("Steve"), _grade(24) {}
+
 Bureaucrat::Bureaucrat(const std::string& name, const int& grade): _name(name), _grade(grade){
 	if (_grade < 1) {
 		throw Bureaucrat::GradeTooHighException();
@@ -21,8 +23,7 @@ Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& other) {
 	return (*this);
 }
 
-Bureaucrat::~Bureaucrat() {
-}
+Bureaucrat::~Bureaucrat() {}
 
 const std::string&	Bureaucrat::getName() const {
 	return (_name);
@@ -33,25 +34,15 @@ const int&	Bureaucrat::getGrade() const {
 }
 
 void	Bureaucrat::incrGrade() {
-	try {
-		if (_grade - 1 < 1)
-			throw Bureaucrat::GradeTooHighException();
-		_grade--;
-	}
-	catch (const std::exception& e) {
-		std::cout << "Promotion results in: " << e.what() << std::endl;
-	}
+	if (_grade - 1 < 1)
+		throw Bureaucrat::GradeTooHighException();
+	_grade--;
 }
 
 void	Bureaucrat::decrGrade() {
-	try {
-		if (_grade + 1 > 150)
-			throw Bureaucrat::GradeTooLowException();
-		_grade++;
-	}
-	catch (const std::exception& e) {
-		std::cout << "Demotion results in: " << e.what() << std::endl;
-	}
+	if (_grade + 1 > 150)
+		throw Bureaucrat::GradeTooLowException();
+	_grade++;
 }
 
 Bureaucrat::GradeTooLowException::GradeTooLowException(): _message("[ Out of bound ] Grade is too low") {

@@ -3,9 +3,9 @@
 
 ScavTrap::ScavTrap(const std::string name): ClapTrap(name) {
 	std::cout << "Creating ScavTrap: " << name << " from ClapTrap" << std::endl;
-	this->_hitPoints = 100;
-	this->_energyPoints = 50;
-	this->_attackDamage = 20;
+	_hitPoints = 100;
+	_energyPoints = 50;
+	_attackDamage = 20;
 }
 
 ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other) {
@@ -14,22 +14,22 @@ ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other) {
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& other) {
 	if (this != &other){
-		this->_name = other._name;
-		this->_hitPoints = other._hitPoints;
-		this->_energyPoints = other._energyPoints;
-		this->_attackDamage = other._attackDamage;
+		_name = other._name;
+		_hitPoints = other._hitPoints;
+		_energyPoints = other._energyPoints;
+		_attackDamage = other._attackDamage;
 	}
 	return (*this);
 }
 
 ScavTrap::~ScavTrap(void) {
-	std::cout << "Destroying ScavTrap: " << this->_name << std::endl;
+	std::cout << "Destroying ScavTrap: " << _name << std::endl;
 }
 
 void	ScavTrap::attack(const std::string& target) {
-	std::cout << "WOW " << this->_name << " is attacking " << target << " dealing an absurd amount of damage ! (" << this->_attackDamage << ")" << std::endl;
+	std::cout << "WOW " << _name << " is attacking " << target << " dealing an absurd amount of damage ! (" << this->_attackDamage << ")" << std::endl;
 }
 
-void	ScavTrap::guardGate(void) {
-	std::cout << this->_name << " is in keeper mode" << std::endl;
+void	ScavTrap::guardGate(void) const {
+	std::cout << _name << " is in keeper mode" << std::endl;
 }

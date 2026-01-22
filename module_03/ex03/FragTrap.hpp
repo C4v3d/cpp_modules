@@ -16,8 +16,6 @@ class FragTrap : virtual public ClapTrap {
 		static const int	_defHitPoints = 100;
 		static const int	_defEnergyPoints = 100;
 		static const int	_defAttackDamage = 30;
-
-
 };
 
 #endif

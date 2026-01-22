@@ -17,7 +17,7 @@ class ClapTrap {
 		friend std::ostream&	operator<<(std::ostream& output, const ClapTrap& clapTrap);
 
 	private:
-		std::string	_name;
+		std::string		_name;
 		unsigned int	_hitPoints;
 		unsigned int	_energyPoints;
 		unsigned int	_attackDamage;
