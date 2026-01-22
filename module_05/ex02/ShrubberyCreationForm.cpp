@@ -2,13 +2,19 @@
 #include <iostream>
 #include <fstream>
 
+ShrubberyCreationForm::ShrubberyCreationForm():
+	AForm("Shrubbery creation form", 145, 137),
+	_target("Here")
+{}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target): 
 	AForm("Shrubbery Creation Form", 145, 137), _target(target) {
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other):
-	AForm(other.getName(), getSignGrade(), getExecGrade()), _target(other._target) {
+	AForm(other.getName(), getSignGrade(), getExecGrade()),
+	_target(other._target)
+{
 		*this = other;
 }
 
@@ -18,8 +24,7 @@ ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationF
 	return (*this);
 }
 
-ShrubberyCreationForm::~ShrubberyCreationForm() {
-}
+ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
 void	drawTree(std::ofstream&	writeFile) {	
 	writeFile << "                                               |"		<< std::endl;
@@ -51,13 +56,6 @@ void	plantASeed(std::string target) {
 		std::cout << "File couldn't been created" << std::endl;
 }
 
-void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const{
-	try {
-		AForm::execute(executor);
-		plantASeed(_target);
-	}
-	catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
-		throw ;
-	}
+void	ShrubberyCreationForm::executeForm(void) const{
+	plantASeed(_target);
 }

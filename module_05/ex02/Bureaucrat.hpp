@@ -5,6 +5,7 @@
 
 class AForm; class Bureaucrat {
 	public:
+		Bureaucrat();
 		Bureaucrat(const std::string& name, const int& grade);
 		Bureaucrat(const Bureaucrat& other);
 		Bureaucrat&	operator=(const Bureaucrat& other);

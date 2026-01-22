@@ -7,7 +7,19 @@ static inline bool	isInRange(const unsigned int& x) {
 	return (1 <= x && x >= 150);
 }
 
-AForm::AForm(const std::string& name, const int& signGrade, const int& execGrade): _name(name), _isSigned(false), _signGrade(signGrade), _execGrade(execGrade){
+AForm::AForm():
+	_name("Default Form"),
+	_isSigned(false),
+	_signGrade(20),
+	_execGrade(10)
+{}
+
+AForm::AForm(const std::string& name, const int& signGrade, const int& execGrade):
+	_name(name),
+	_isSigned(false),
+	_signGrade(signGrade),
+	_execGrade(execGrade)
+{
 	try {
 		if (!isInRange(_execGrade))
 			throw _execGrade;
@@ -22,24 +34,11 @@ AForm::AForm(const std::string& name, const int& signGrade, const int& execGrade
 	}
 }
 
-//Form::Form(const std::string& name, const int& signGrade, const int& execGrade)
-//try : _name(name), _signGrade(signGrade), _execGrade(execGrade), _isSigned(false)
-//{
-//	if (!isInRange(_signGrade))
-//		throw _signGrade;
-//	if (!isInRange(_execGrade))
-//		throw _execGrade;
-//}
-//catch (int grade) {
-//	if (grade < 1)
-//		throw Form::GradeTooHighException();
-//	if (grade > 150)
-//		throw Form::GradeTooHighException();
-//}
-
-
-
-AForm::AForm(const AForm& other): _name(other._name), _signGrade(other._signGrade), _execGrade(other._execGrade) {
+AForm::AForm(const AForm& other):
+	_name(other._name),
+	_signGrade(other._signGrade),
+	_execGrade(other._execGrade)
+{
 	*this = other;
 }
 
@@ -50,65 +49,37 @@ AForm&	AForm::operator=(const AForm& other) {
 	return (*this);
 }
 
-AForm::~AForm() {
-}
+AForm::~AForm() {}
 
-const std::string&	AForm::getName() const {
-	return (_name);
-}
+const std::string&	AForm::getName() const { return (_name); }
 
-const bool&		AForm::getSignStatus() const {
-	return (_isSigned);
-}
+const bool&		AForm::getSignStatus() const { return (_isSigned); }
 
-const int&		AForm::getSignGrade() const {
-	return (_signGrade);
-}
+const int&		AForm::getSignGrade() const { return (_signGrade); }
 
-const int&		AForm::getExecGrade() const {
-	return (_execGrade);
-}
+const int&		AForm::getExecGrade() const { return (_execGrade); }
 
 void	AForm::beSigned(const Bureaucrat& bureaucrat) {
-	try {
-		if (bureaucrat.getGrade() > _signGrade)
-			throw AForm::GradeTooLowException();
-		_isSigned = true;
-	}
-	catch (const std::exception& e) {
-		throw 1;
-	}
+	bureaucrat.getGrade() > _signGrade ? throw AForm::GradeTooLowException() : _isSigned = true;
 }
 
-AForm::GradeTooLowException::GradeTooLowException(): _message("[ Grade too low ] Form's grade is too low") {
-}
+AForm::GradeTooLowException::GradeTooLowException(): _message("[ Grade too low ] Form's grade is too low") {}
 
-const char*	AForm::GradeTooLowException::what() const throw() {
-	return (_message.c_str());
-}
+const char*	AForm::GradeTooLowException::what() const throw() { return (_message.c_str()); }
 
-AForm::GradeTooLowException::~GradeTooLowException() throw() {
-}
+AForm::GradeTooLowException::~GradeTooLowException() throw() {}
 
-AForm::GradeTooHighException::GradeTooHighException(): _message("[ Grade too high ] Form's grade is too high") {
-}
+AForm::GradeTooHighException::GradeTooHighException(): _message("[ Grade too high ] Form's grade is too high") {}
 
-const char*	AForm::GradeTooHighException::what() const throw() {
-	return (_message.c_str());
-}
+const char*	AForm::GradeTooHighException::what() const throw() { return (_message.c_str()); }
 
-AForm::GradeTooHighException::~GradeTooHighException() throw() {
-}
+AForm::GradeTooHighException::~GradeTooHighException() throw() {}
 
-AForm::FormRequireSign::FormRequireSign(): _message("[ Form has to be signed in order to be executed ]") {
-}
+AForm::FormRequireSign::FormRequireSign(): _message("[ Form has to be signed in order to be executed ]") {}
 
-AForm::FormRequireSign::~FormRequireSign() throw() {
-}
+AForm::FormRequireSign::~FormRequireSign() throw() {}
 
-const char*	AForm::FormRequireSign::what() const throw() {
-	return (_message.c_str());
-}
+const char*	AForm::FormRequireSign::what() const throw() { return (_message.c_str()); }
 
 std::ostream&	operator<<(std::ostream& out, const AForm& form) {
 	out << "Form: " << form.getName() << "\nSign grade: " << form.getSignGrade()
@@ -122,4 +93,5 @@ void	AForm::execute(Bureaucrat const& executor) const{
 		throw FormRequireSign();
 	else if (executor.getGrade() > _execGrade)
 		throw Bureaucrat::GradeTooLowException();
+	executeForm();
 }
