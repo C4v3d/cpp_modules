@@ -7,8 +7,14 @@ int	main(void) {
 	Bureaucrat	a("George", 5);
 	std::cout << a << std::endl;
 	std::cout << "George is now CEO !" << std::endl;
-	for (int i = 0; i < 4; i++)
-		a.incrGrade();
+	for (int i = 0; i < 4; i++) {
+		try {
+			a.incrGrade();
+		}
+		catch (std::exception & e) {
+			std::cout << e.what() << std::endl;
+		}
+	}
 	std::cout << a << std::endl;
 
 	std::cout << "\ninit b as a copy of a" << std::endl;
