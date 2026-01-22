@@ -1,12 +1,19 @@
 #include "PresidentialPardonForm.hpp"
 #include <iostream>
 
+PresidentialPardonForm::PresidentialPardonForm():
+	AForm("Presidential Pardon Form", 25, 5),
+	_target("Steve")
+{}
+
 PresidentialPardonForm::PresidentialPardonForm(std::string const & target):
-	AForm("Presidential Pardon Form", 25, 5), _target(target) {
+	AForm("Presidential Pardon Form", 25, 5),
+	_target(target) {
 }
 
 PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const & other):
-	AForm(other._target, other.getSignGrade(), other.getExecGrade()), _target(other._target) {
+	AForm(other._target, other.getSignGrade(), other.getExecGrade()),
+	_target(other._target) {
 		*this = other;
 }
 
@@ -16,16 +23,8 @@ PresidentialPardonForm&	PresidentialPardonForm::operator=(PresidentialPardonForm
 	return (*this);
 }
 
-PresidentialPardonForm::~PresidentialPardonForm() {
-}
+PresidentialPardonForm::~PresidentialPardonForm() {}
 
-void	PresidentialPardonForm::execute(Bureaucrat const & executor) const {
-	try {
-		AForm::execute(executor);
-		std::cout << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
-	}
-	catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-		throw ;
-	}
+void	PresidentialPardonForm::executeForm() const {
+	std::cout << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }

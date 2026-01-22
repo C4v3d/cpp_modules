@@ -2,7 +2,7 @@
 # define INTERN_HPP
 
 #include <string>
-#include <map>
+// #include <map>
 
 class AForm;
 class ShrubberyCreationForm;
@@ -18,7 +18,7 @@ class Intern {
 
 		AForm*	makeForm(std::string const & formName, std::string const & target) const;
 	private:
-		std::map<std::string, AForm*(Intern::*)(std::string const &)const> _funcMap;
+		//std::map<std::string, AForm*(Intern::*)(std::string const &)const> _funcMap;
 		AForm*	getShrubberyForm(std::string const & target) const;
 		AForm*	getRobotomyForm(std::string const & target) const;
 		AForm*	getPardonForm(std::string const & target) const;
