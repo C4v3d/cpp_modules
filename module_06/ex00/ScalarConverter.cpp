@@ -13,7 +13,6 @@ ScalarConverter::~ScalarConverter() {};
 
 /* Converter */
 
-
 static t_type	type_id(std::string const & str) {
 	
 	if (str.find_first_of('.') != str.npos) {
@@ -41,9 +40,10 @@ static t_type	type_id(std::string const & str) {
 }
 
 void	ScalarConverter::convert(std::string const & str) {
+	t_type	inputType;
 	if (str.empty()) {
 		std::cout << "String empty" << std::endl;
 		return ;
 	}
-	type_id(str);
+	inputType = type_id(str);
 }
