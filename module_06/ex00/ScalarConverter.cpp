@@ -13,6 +13,37 @@ ScalarConverter::~ScalarConverter() {};
 
 /* Converter */
 
-void ScalarConverter::convert(std::string const & str) {
-	std::cout << str << std::endl;
+
+static t_type	type_id(std::string const & str) {
+	
+	if (str.find_first_of('.') != str.npos) {
+		if (str.find_last_of('f') != str.npos) {
+			std::cout << "Float" << std::endl;
+			return (FLOAT);
+		}
+		else {
+			std::cout << "DOUBLE" << std::endl;
+			return (DOUBLE);
+		}
+	}
+	else {
+		if (str.size() == 1 && std::isalpha(str[0])) {
+      			std::cout << "Char" << std::endl;
+			return (CHAR);
+		}
+		else if (str.find_first_not_of("-1234567890") == str.npos) {
+			std::cout << "Int" << std::endl;
+			return (INT);
+		}
+	}
+	std::cout << "Unknown" << std::endl;
+	return (UNKNOWN);
+}
+
+void	ScalarConverter::convert(std::string const & str) {
+	if (str.empty()) {
+		std::cout << "String empty" << std::endl;
+		return ;
+	}
+	type_id(str);
 }
