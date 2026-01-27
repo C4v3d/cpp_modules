@@ -54,6 +54,7 @@ AForm*	Intern::makeForm(std::string const & formName, std::string const & target
 
 	for (int i = 0; i < 3; i++){
 		if (requests[i] == formName) {
+			std::cout << "Intern creates " << requests[i] << std::endl;
 			return (this->*funcPtrs[i])(target);
 		}
 	}

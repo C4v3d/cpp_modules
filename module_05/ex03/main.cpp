@@ -30,6 +30,9 @@ int	main(void) {
 		john.executeForm(*form);
 		delete form;
 
+		form = Steve.makeForm("wrong form", "you");
+		john.signForm(*form);
+		john.executeForm(*form);
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << std::endl;
