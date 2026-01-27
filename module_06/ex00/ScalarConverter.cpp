@@ -5,9 +5,9 @@
 
 ScalarConverter::ScalarConverter() {};
 
-ScalarConverter::ScalarConverter(ScalarConverter const & other) {}
+ScalarConverter::ScalarConverter(ScalarConverter const & other) {(void)other;}
 
-ScalarConverter& ScalarConverter::operator=(ScalarConverter const & other) {return (*this);}
+ScalarConverter& ScalarConverter::operator=(ScalarConverter const & other) {return ((void)other, *this);}
 
 ScalarConverter::~ScalarConverter() {};
 

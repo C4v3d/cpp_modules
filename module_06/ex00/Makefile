@@ -4,11 +4,11 @@ CXXFLAGS = -std=c++98 -Wall -Werror -Wextra
 BUILD_PATH = build
 
 SRC = main.cpp\
-      Bureaucrat.cpp \
+      ScalarConverter.cpp \
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
-NAME = bureaucrat
+NAME = convert
 
 all: $(NAME)
 
