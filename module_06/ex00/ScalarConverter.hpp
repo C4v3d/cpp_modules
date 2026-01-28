@@ -16,6 +16,7 @@ typedef enum e_type {
 class ScalarConverter {
 public:
 	static void convert(std::string const & str);
+	class valueTooLargeException;
 private:
 	ScalarConverter();
 	ScalarConverter(ScalarConverter const & other);
@@ -32,6 +33,11 @@ private:
 	// static void	printConversions(double const & val);
 
 	static void (*funcPtrs[4])(std::string const &);
+};
+
+class ScalarConverter::valueTooLargeException : public std::exception {
+public:
+	const char*	what() const throw();
 };
 
 #endif

@@ -22,21 +22,55 @@ ScalarConverter::~ScalarConverter() {};
 void	ScalarConverter::fromChar(std::string const & str) {
 		std::cout << str << std::endl;
 }
+/*	This function should when atoi fails	*/
+static int	safeAtoi(std::string str) {
+	int	res;
+	size_t	minusSign = str.find_first_of('-');
 
+	if (minusSign == 0)
+		str.erase(0, 1);
+	res = std::atoi(str.c_str());
+	std::cout << "Atoi res: " << res << std::endl;
+	if (res < 0)
+		throw ScalarConverter::valueTooLargeException();
+	return (minusSign == 0 ? (res = res * -1) : res);
+}
+
+/*	INT 		*/
 void	ScalarConverter::fromInt(std::string const & str) {
-	int val = atoi(str.c_str());
-	std::cout << val << std::endl;
+	int	res;
+	size_t	minusSign = str.find_last_of('-');
+
+	if (minusSign > 0 && minusSign != str.npos) {
+		std::cout << "Wronf integer format" << std::endl;
+		return ;
+	}
+	if (str.size() > 11) {
+		std::cout << "Value too big" << std::endl;
+		return;
+	}
+	try {
+		res = safeAtoi(str);
+	} catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+		return ;
+	}
+	std::cout << "Final res: " << res << std::endl;
 	// printConversions(val);
 }
 
+/*	FLOAT		*/
 void	ScalarConverter::fromFloat(std::string const & str) {
 	size_t	decimalPos = str.find_first_of('.');
 	size_t	fFlag;
-	size_t	minusSign = str.find_first_of('-');
+	size_t	minusSign = str.find_last_of('-');
 
 	if (minusSign > 0 && minusSign != str.npos) {
 		std::cout << "Found minus sign in the wrong pos" << std::endl;
 		return ;
+	}
+	if (decimalPos == 0 || decimalPos == str.npos) {
+		std::cout << "Incorrect Float Format" << std::endl;
 	}
 	if (str.find_first_not_of(NUMSET) != decimalPos) {
 		std::cout << "Found wrong char before decimal Point" << std::endl;
@@ -49,10 +83,11 @@ void	ScalarConverter::fromFloat(std::string const & str) {
 	}
 	std::cout << "Valid float" << std::endl;
 }
-/* CHECK FOR NEGATIVE VALUES */
+
+/*	DOUBLE		*/
 void	ScalarConverter::fromDouble(std::string const & str) {
 	size_t	decimalPos = str.find_first_of('.');
-	size_t	minusSign = str.find_first_of('-');
+	size_t	minusSign = str.find_last_of('-');
 
 	if (minusSign > 0 && minusSign != str.npos) {
 		std::cout << "incorrect Double format!" << std::endl;
@@ -112,3 +147,5 @@ void	ScalarConverter::convert(std::string const & str) {
 	if (inputType >= 0)
 		(funcPtrs[inputType](str));
 }
+
+const char*	ScalarConverter::valueTooLargeException::what() const throw() { return ("Value is too big"); }
