@@ -3,6 +3,8 @@
 
 #include <string>
 
+#define NUMSET "-1234567890"
+
 typedef enum e_type {
 	CHAR,
 	INT,

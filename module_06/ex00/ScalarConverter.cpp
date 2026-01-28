@@ -32,20 +32,45 @@ void	ScalarConverter::fromInt(std::string const & str) {
 void	ScalarConverter::fromFloat(std::string const & str) {
 	size_t	decimalPos = str.find_first_of('.');
 	size_t	fFlag;
-	if (str.find_first_not_of("1234567890") != decimalPos) { // Check Before decimal point.
-		std::cout << "Incorrect Float format!" << std::endl;
+	size_t	minusSign = str.find_first_of('-');
+
+	if (minusSign > 0 && minusSign != str.npos) {
+		std::cout << "Found minus sign in the wrong pos" << std::endl;
 		return ;
 	}
-	fFlag = str.find_first_not_of("1234567890", decimalPos + 1);
+	if (str.find_first_not_of(NUMSET) != decimalPos) {
+		std::cout << "Found wrong char before decimal Point" << std::endl;
+		return ;
+	}
+	fFlag = str.find_first_not_of(NUMSET, decimalPos + 1);
 	if (fFlag != str.size() - 1 || str[fFlag] != 'f' || fFlag - 1 == decimalPos) {
-		std::cout << "Incorrect Float Format" << std::endl;
+		std::cout << "Found wrong char before deicmal Point" << std::endl;
 		return ;
 	}
 	std::cout << "Valid float" << std::endl;
 }
-
+/* CHECK FOR NEGATIVE VALUES */
 void	ScalarConverter::fromDouble(std::string const & str) {
-	std::cout << str << std::endl;
+	size_t	decimalPos = str.find_first_of('.');
+	size_t	minusSign = str.find_first_of('-');
+
+	if (minusSign > 0 && minusSign != str.npos) {
+		std::cout << "incorrect Double format!" << std::endl;
+		return ;
+	}
+	if (decimalPos == 0 || decimalPos == str.size() - 1) {
+		std::cout << "incorrect Double format!" << std::endl;
+		return ;
+	}
+	if (str.find_first_not_of(NUMSET) != decimalPos) {
+		std::cout << "Incorrect Double format!" << std::endl;
+		return ;
+	}
+	if (str.find_first_not_of (NUMSET, decimalPos + 1) != str.npos) {
+		std::cout << "Incorrect Double format!" << std::endl;
+		return ;
+	}
+	std::cout << "Valid Double" << std::endl;
 }
 
 /* Converter */
