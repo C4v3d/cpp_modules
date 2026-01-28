@@ -2,6 +2,14 @@
 
 #include <string>
 #include <iostream>
+#include <cstdlib>
+
+void (*ScalarConverter::funcPtrs[4])(std::string const &) = {
+	&ScalarConverter::fromChar,
+	&ScalarConverter::fromInt,
+	&ScalarConverter::fromFloat,
+	&ScalarConverter::fromDouble
+};
 
 ScalarConverter::ScalarConverter() {};
 
@@ -10,6 +18,35 @@ ScalarConverter::ScalarConverter(ScalarConverter const & other) {(void)other;}
 ScalarConverter& ScalarConverter::operator=(ScalarConverter const & other) {return ((void)other, *this);}
 
 ScalarConverter::~ScalarConverter() {};
+
+void	ScalarConverter::fromChar(std::string const & str) {
+		std::cout << str << std::endl;
+}
+
+void	ScalarConverter::fromInt(std::string const & str) {
+	int val = atoi(str.c_str());
+	std::cout << val << std::endl;
+	// printConversions(val);
+}
+
+void	ScalarConverter::fromFloat(std::string const & str) {
+	size_t	decimalPos = str.find_first_of('.');
+	size_t	fFlag;
+	if (str.find_first_not_of("1234567890") != decimalPos) { // Check Before decimal point.
+		std::cout << "Incorrect Float format!" << std::endl;
+		return ;
+	}
+	fFlag = str.find_first_not_of("1234567890", decimalPos + 1);
+	if (fFlag != str.size() - 1 || str[fFlag] != 'f' || fFlag - 1 == decimalPos) {
+		std::cout << "Incorrect Float Format" << std::endl;
+		return ;
+	}
+	std::cout << "Valid float" << std::endl;
+}
+
+void	ScalarConverter::fromDouble(std::string const & str) {
+	std::cout << str << std::endl;
+}
 
 /* Converter */
 
@@ -41,9 +78,12 @@ static t_type	type_id(std::string const & str) {
 
 void	ScalarConverter::convert(std::string const & str) {
 	t_type	inputType;
+
 	if (str.empty()) {
 		std::cout << "String empty" << std::endl;
 		return ;
 	}
 	inputType = type_id(str);
+	if (inputType >= 0)
+		(funcPtrs[inputType](str));
 }

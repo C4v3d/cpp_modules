@@ -20,17 +20,16 @@ private:
 	ScalarConverter& operator=(ScalarConverter const & other);
 	~ScalarConverter();
 
-	void	fromChar(std::string const & str);
-	void	fromInt(std::string const & str);
-	void	fromFloat(std::string const & str);
-	void	fromDouble(std::string const & str);
+	static void	fromChar(std::string const & str);
+	static void	fromInt(std::string const & str);
+	static void	fromFloat(std::string const & str);
+	static void	fromDouble(std::string const & str);
 
-	void (ScalarConverter::*funcPtrs[4])(std::string const &) = {
-		&ScalarConverter::fromChar,
-		&ScalarConverter::fromInt,
-		&ScalarConverter::fromFloat,
-		&ScalarConverter::fromDouble};
-	
+	// static void	printConversions(int const & val);
+	// static void	printConversions(float const & val);
+	// static void	printConversions(double const & val);
+
+	static void (*funcPtrs[4])(std::string const &);
 };
 
 #endif
