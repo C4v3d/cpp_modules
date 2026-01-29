@@ -27,13 +27,44 @@ static int	safeAtoi(std::string str) {
 	int	res;
 	size_t	minusSign = str.find_first_of('-');
 
+	if (str == "-2147483648")
+		return (-2147483648);
 	if (minusSign == 0)
 		str.erase(0, 1);
 	res = std::atoi(str.c_str());
-	std::cout << "Atoi res: " << res << std::endl;
 	if (res < 0)
 		throw ScalarConverter::valueTooLargeException();
 	return (minusSign == 0 ? (res = res * -1) : res);
+}
+
+static void	decimalFormatChecker(std::string const & str, t_type type) {	
+	size_t	minusSign = str.find_last_of('-');
+	size_t	decimalPos = str.find_first_of('.');
+	size_t	fFlag;
+
+	if (minusSign > 0 && minusSign != str.npos) {
+		std::cout << "Found minus sign in the wrong pos" << std::endl;
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (decimalPos == 0 || decimalPos == str.size() - 1) {
+		std::cout << "incorrect Double format!" << std::endl;	
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (str.find_first_not_of(NUMSET) != decimalPos) {
+		std::cout << "Incorrect Double format!" << std::endl;
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (type == DOUBLE && str.find_first_not_of (NUMSET, decimalPos + 1) != str.npos) {
+		std::cout << "Incorrect Double format!" << std::endl;
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (type == FLOAT) {
+		fFlag = str.find_first_not_of(NUMSET, decimalPos + 1);
+		if (fFlag != str.size() - 1 || str[fFlag] != 'f' || fFlag - 1 == decimalPos) {
+			std::cout << "Found wrong char before deicmal Point" << std::endl;
+			throw (ScalarConverter::valueTooLargeException());
+		}
+	}
 }
 
 /*	INT 		*/
@@ -45,9 +76,9 @@ void	ScalarConverter::fromInt(std::string const & str) {
 		std::cout << "Wronf integer format" << std::endl;
 		return ;
 	}
-	if (str.size() > 11) {
-		std::cout << "Value too big" << std::endl;
-		return;
+	if (str.size() > 10 && minusSign != 0) {
+		std::cout << "Value too Large" << std::endl;
+		return ;
 	}
 	try {
 		res = safeAtoi(str);
@@ -61,50 +92,22 @@ void	ScalarConverter::fromInt(std::string const & str) {
 
 /*	FLOAT		*/
 void	ScalarConverter::fromFloat(std::string const & str) {
-	size_t	decimalPos = str.find_first_of('.');
-	size_t	fFlag;
-	size_t	minusSign = str.find_last_of('-');
-
-	if (minusSign > 0 && minusSign != str.npos) {
-		std::cout << "Found minus sign in the wrong pos" << std::endl;
-		return ;
-	}
-	if (decimalPos == 0 || decimalPos == str.npos) {
-		std::cout << "Incorrect Float Format" << std::endl;
-	}
-	if (str.find_first_not_of(NUMSET) != decimalPos) {
-		std::cout << "Found wrong char before decimal Point" << std::endl;
-		return ;
-	}
-	fFlag = str.find_first_not_of(NUMSET, decimalPos + 1);
-	if (fFlag != str.size() - 1 || str[fFlag] != 'f' || fFlag - 1 == decimalPos) {
-		std::cout << "Found wrong char before deicmal Point" << std::endl;
-		return ;
+	try {
+		decimalFormatChecker(str, FLOAT);
+	} catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
 	}
 	std::cout << "Valid float" << std::endl;
 }
 
 /*	DOUBLE		*/
 void	ScalarConverter::fromDouble(std::string const & str) {
-	size_t	decimalPos = str.find_first_of('.');
-	size_t	minusSign = str.find_last_of('-');
+	try {
+		decimalFormatChecker(str, DOUBLE);
+	} catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
 
-	if (minusSign > 0 && minusSign != str.npos) {
-		std::cout << "incorrect Double format!" << std::endl;
-		return ;
-	}
-	if (decimalPos == 0 || decimalPos == str.size() - 1) {
-		std::cout << "incorrect Double format!" << std::endl;
-		return ;
-	}
-	if (str.find_first_not_of(NUMSET) != decimalPos) {
-		std::cout << "Incorrect Double format!" << std::endl;
-		return ;
-	}
-	if (str.find_first_not_of (NUMSET, decimalPos + 1) != str.npos) {
-		std::cout << "Incorrect Double format!" << std::endl;
-		return ;
-	}
 	std::cout << "Valid Double" << std::endl;
 }
 
