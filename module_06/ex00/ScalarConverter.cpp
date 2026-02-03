@@ -102,44 +102,47 @@ void	ScalarConverter::fromInt(std::string const & str) {
 
 /*	FLOAT		*/
 void	ScalarConverter::fromFloat(std::string const & str) {
+	float	res;
+
 	try {
 		decimalFormatChecker(str, FLOAT);
+		std::string	s(str);
+		s.erase(s.find_last_of('f'));
+		res = std::atof(s.c_str());
+		::printConversions(res);
 	} catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
 	/* Convert from string to float */
-	std::cout << str << std::endl;
 }
 
 /*	DOUBLE		*/
 void	ScalarConverter::fromDouble(std::string const & str) {
+	double	res;
+
 	try {
 		decimalFormatChecker(str, DOUBLE);
+		res = std::atof(str.c_str());
+		::printConversions(res);
 	} catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
-	/* Convert from string to double */
-	std::cout << str << std::endl;
 }
 
 /* ID */
 static t_type	type_id(std::string const & str) {
 
 	if (str.find_first_of('.') != str.npos) {
-		if (str.find_last_of('f') != str.npos) {
+		if (str.find_last_of('f') != str.npos)
 			return (FLOAT);
-		}
-		else {
+		else
 			return (DOUBLE);
-		}
 	}
 	else {
-		if (str.size() == 1 && std::isalpha(str[0])) {
+		if (str.size() == 1 && std::isalpha(str[0]))
 			return (CHAR);
-		}
-		else if (str.find_first_not_of("-1234567890") == str.npos) {
+		else if (str.find_first_not_of("-1234567890") == str.npos)
 			return (INT);
-		}
 	}
 	return (UNKNOWN);
 }
