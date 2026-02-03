@@ -18,6 +18,8 @@ typedef enum e_type {
 std::string trim(std::string const & src);
 int			safeAtoi(std::string str);
 void		decimalFormatChecker(std:: string const & str, t_type type);
+void		printN(std::string const & s);
+void		printN(std::string const & s, float);
 
 template <typename T> void printConversions(T const &x) {
 	std::cout << std::fixed << std::setprecision(1);
@@ -26,7 +28,7 @@ template <typename T> void printConversions(T const &x) {
 		else
 			std::cout << "Non displayable" << std::endl;
 		std::cout << "int: " << static_cast<int>(x) << std::endl;
-		std::cout << "float: " << static_cast<float>(x) << "f" << std::endl;
+		std::cout << "float: " << static_cast<float>(x) << 'f' << std::endl;
 		std::cout << "double: " << static_cast<double>(x) << std::endl;
 }
 

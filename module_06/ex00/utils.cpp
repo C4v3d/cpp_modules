@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <cmath>
 #include "ScalarConverter.hpp"
 
 std::string	trim(std::string const & src) {
@@ -53,4 +54,11 @@ void	decimalFormatChecker(std::string const & str, t_type type) {
 			throw (ScalarConverter::valueTooLargeException());
 		}
 	}
+}
+
+void	printN(std::string const & s) {
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: " << static_cast<float>(nan(s.c_str())) << 'f' << std::endl;
+	std::cout << "double: " << static_cast<double>(nan(s.c_str())) << std::endl;
 }

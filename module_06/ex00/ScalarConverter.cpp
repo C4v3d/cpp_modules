@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
+#include <limits>
 
 void (*ScalarConverter::funcPtrs[4])(std::string const &) = {
 	&ScalarConverter::fromChar,
@@ -47,8 +48,12 @@ void	ScalarConverter::fromInt(std::string const & str) {
 }
 
 void	ScalarConverter::fromFloat(std::string const & str) {
-	float	res;
+	float	res = 0;
 
+	if (str == "nanf") {
+		printN(str);
+		return ;
+	}
 	try {
 		decimalFormatChecker(str, FLOAT);
 		std::string	s(str);
@@ -62,7 +67,10 @@ void	ScalarConverter::fromFloat(std::string const & str) {
 
 void	ScalarConverter::fromDouble(std::string const & str) {
 	double	res;
-
+	if (str == "nan") {
+		printN(str);
+		return ;
+	}
 	try {
 		decimalFormatChecker(str, DOUBLE);
 		res = std::atof(str.c_str());
@@ -74,6 +82,10 @@ void	ScalarConverter::fromDouble(std::string const & str) {
 
 static t_type	type_id(std::string const & str) {
 
+	if (str == "nan")
+		return (DOUBLE);
+	if (str == "nanf")
+		return (FLOAT);
 	if (str.find_first_of('.') != str.npos) {
 		if (str.find_last_of('f') != str.npos)
 			return (FLOAT);
@@ -89,18 +101,11 @@ static t_type	type_id(std::string const & str) {
 	return (UNKNOWN);
 }
 
-static void	printNan() {
-	std::cout << "char: impossible" << std::endl;
-	std::cout << "int: impossible" << std::endl;
-	std::cout << "float: nanf" << std::endl;
-	std::cout << "double: nan" << std::endl;
-}
-
 static void	printInf() {
 	std::cout << "char: impossible" << std::endl;
-	std::cout << "int: impossible" << std::endl;
-	std::cout << "float: impossible" << std::endl;
-	std::cout << "double: impossible" << std::endl;
+	std::cout << "int: " << std::numeric_limits<int>::infinity() << std::endl;
+	std::cout << "float: " << std::numeric_limits<float>::infinity() << 'f' << std::endl;
+	std::cout << "double: " << std::numeric_limits<double>::infinity() << std::endl;
 }
 
 void	ScalarConverter::convert(std::string const & str) {
@@ -110,11 +115,7 @@ void	ScalarConverter::convert(std::string const & str) {
 		std::cout << "String empty" << std::endl;
 		return ;
 	}
-	if (str == "nan" || str == "nanf") {
-		printNan();
-		return ;
-	}
-	else if (str == "+inff" || str == "-inff" || str == "+inf" || str == "-inf") {
+	if (str == "+inff" || str == "-inff" || str == "+inf" || str == "-inf") {
 		printInf();
 		return ;
 	}
