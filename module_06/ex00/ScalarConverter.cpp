@@ -19,11 +19,14 @@ ScalarConverter& ScalarConverter::operator=(ScalarConverter const & other) {retu
 
 ScalarConverter::~ScalarConverter() {};
 
-void	ScalarConverter::fromChar(std::string const & str) {
-	std::string::const_iterator  it=str.begin();
-	::printConversions(*it);
+static std::string	trim(std::string const & src) {
+	std::string	res(src);
+
+	res.erase(0,res.find_first_not_of(" \n\r\t"));
+	res.erase(res.find_last_not_of(" \n\r\t") + 1);
+	return(res);
 }
-/*	This function should throw when atoi fails	*/
+
 static int	safeAtoi(std::string str) {
 	int	res;
 	size_t	minusSign = str.find_first_of('-');
@@ -38,7 +41,8 @@ static int	safeAtoi(std::string str) {
 	return (minusSign == 0 ? (res = res * -1) : res);
 }
 
-static void	decimalFormatChecker(std::string const & str, t_type type) {	
+/*	Checker	*/
+static void	decimalFormatChecker(std::string const & str, t_type type) {
 	size_t	minusSign = str.find_last_of('-');
 	size_t	decimalPos = str.find_first_of('.');
 	size_t	fFlag;
@@ -48,7 +52,7 @@ static void	decimalFormatChecker(std::string const & str, t_type type) {
 		throw (ScalarConverter::valueTooLargeException());
 	}
 	if (decimalPos == 0 || decimalPos == str.size() - 1) {
-		std::cout << "incorrect Double format!" << std::endl;	
+		std::cout << "incorrect Double format!" << std::endl;
 		throw (ScalarConverter::valueTooLargeException());
 	}
 	if (str.find_first_not_of(NUMSET) != decimalPos) {
@@ -66,6 +70,12 @@ static void	decimalFormatChecker(std::string const & str, t_type type) {
 			throw (ScalarConverter::valueTooLargeException());
 		}
 	}
+}
+
+/*	CHAR	*/
+void	ScalarConverter::fromChar(std::string const & str) {
+	std::string::const_iterator  it=str.begin();
+	::printConversions(*it);
 }
 
 /*	INT 		*/
@@ -97,6 +107,8 @@ void	ScalarConverter::fromFloat(std::string const & str) {
 	} catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
+	/* Convert from string to float */
+	std::cout << str << std::endl;
 }
 
 /*	DOUBLE		*/
@@ -106,12 +118,11 @@ void	ScalarConverter::fromDouble(std::string const & str) {
 	} catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
-
-	std::cout << "Valid Double" << std::endl;
+	/* Convert from string to double */
+	std::cout << str << std::endl;
 }
 
-/* Converter */
-
+/* ID */
 static t_type	type_id(std::string const & str) {
 
 	if (str.find_first_of('.') != str.npos) {
@@ -140,9 +151,10 @@ void	ScalarConverter::convert(std::string const & str) {
 		std::cout << "String empty" << std::endl;
 		return ;
 	}
-	inputType = type_id(str);
+	std::string	s(trim(str));
+	inputType = type_id(s);
 	if (inputType >= 0)
-		(funcPtrs[inputType](str));
+		(funcPtrs[inputType](s));
 	else
 		std::cout << "Unknown type, please enter one of these -> [int, long, double, char]." << std::endl;
 }
