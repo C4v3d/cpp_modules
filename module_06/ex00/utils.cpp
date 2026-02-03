@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include "ScalarConverter.hpp"
+
+std::string	trim(std::string const & src) {
+	std::string	res(src);
+
+	res.erase(0,res.find_first_not_of(" \n\r\t"));
+	res.erase(res.find_last_not_of(" \n\r\t") + 1);
+	return(res);
+}
+
+int	safeAtoi(std::string str) {
+	int	res;
+	size_t	minusSign = str.find_first_of('-');
+
+	if (str == "-2147483648")
+		return (-2147483648);
+	if (minusSign == 0)
+		str.erase(0, 1);
+	res = std::atoi(str.c_str());
+	if (res < 0)
+		throw ScalarConverter::valueTooLargeException();
+	return (minusSign == 0 ? (res = res * -1) : res);
+}
+
+void	decimalFormatChecker(std::string const & str, t_type type) {
+	size_t	minusSign = str.find_last_of('-');
+	size_t	decimalPos = str.find_first_of('.');
+	size_t	fFlag;
+
+	if (minusSign > 0 && minusSign != str.npos) {
+		std::cout << "Found minus sign in the wrong pos" << std::endl;
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (decimalPos == 0 || decimalPos == str.size() - 1) {
+		std::cout << "incorrect Double format!" << std::endl;
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (str.find_first_not_of(NUMSET) != decimalPos) {
+		std::cout << "Incorrect Double format!" << std::endl;
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (type == DOUBLE && str.find_first_not_of (NUMSET, decimalPos + 1) != str.npos) {
+		std::cout << "Incorrect Double format!" << std::endl;
+		throw (ScalarConverter::valueTooLargeException());
+	}
+	if (type == FLOAT) {
+		fFlag = str.find_first_not_of(NUMSET, decimalPos + 1);
+		if (fFlag != str.size() - 1 || str[fFlag] != 'f' || fFlag - 1 == decimalPos) {
+			std::cout << "Found wrong char before deicmal Point" << std::endl;
+			throw (ScalarConverter::valueTooLargeException());
+		}
+	}
+}

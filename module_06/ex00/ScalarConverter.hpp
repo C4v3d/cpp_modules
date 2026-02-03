@@ -15,6 +15,10 @@ typedef enum e_type {
 	UNKNOWN = -1
 }	t_type;
 
+std::string trim(std::string const & src);
+int			safeAtoi(std::string str);
+void		decimalFormatChecker(std:: string const & str, t_type type);
+
 template <typename T> void printConversions(T const &x) {
 	std::cout << std::fixed << std::setprecision(1);
 		if (std::isprint(x))
@@ -43,16 +47,16 @@ private:
 
 	static void (*funcPtrs[4])(std::string const &);
 
-	template <typename T> void printConversions(T const &x) {
-		std::cout << std::fixed << std::setprecision(1);
-			if (std::isprint(x))
-				std::cout << "char: " << static_cast<char>(x) << std::endl;
-			else
-				std::cout << "Non displayable" << std::endl;
-			std::cout << "int: " << x << std::endl;
-			std::cout << "float: " << static_cast<float>(x) << "f" << std::endl;
-			std::cout << "double: " << static_cast<double>(x) << std::endl;
-	}
+	//template <typename T> void printConversions(T const &x) {
+	//	std::cout << std::fixed << std::setprecision(1);
+	//		if (std::isprint(x))
+	//			std::cout << "char: " << static_cast<char>(x) << std::endl;
+	//		else
+	//			std::cout << "Non displayable" << std::endl;
+	//		std::cout << "int: " << x << std::endl;
+	//		std::cout << "float: " << static_cast<float>(x) << "f" << std::endl;
+	//		std::cout << "double: " << static_cast<double>(x) << std::endl;
+	//}
 };
 
 class ScalarConverter::valueTooLargeException : public std::exception {

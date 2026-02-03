@@ -5,6 +5,7 @@ BUILD_PATH = build
 
 SRC = main.cpp\
       ScalarConverter.cpp \
+      utils.cpp \
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
