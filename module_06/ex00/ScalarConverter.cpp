@@ -20,9 +20,10 @@ ScalarConverter& ScalarConverter::operator=(ScalarConverter const & other) {retu
 ScalarConverter::~ScalarConverter() {};
 
 void	ScalarConverter::fromChar(std::string const & str) {
-		std::cout << str << std::endl;
+	std::string::const_iterator  it=str.begin();
+	::printConversions(*it);
 }
-/*	This function should when atoi fails	*/
+/*	This function should throw when atoi fails	*/
 static int	safeAtoi(std::string str) {
 	int	res;
 	size_t	minusSign = str.find_first_of('-');
@@ -30,7 +31,6 @@ static int	safeAtoi(std::string str) {
 	if (minusSign == 0)
 		str.erase(0, 1);
 	res = std::atoi(str.c_str());
-	std::cout << "Atoi res: " << res << std::endl;
 	if (res < 0)
 		throw ScalarConverter::valueTooLargeException();
 	return (minusSign == 0 ? (res = res * -1) : res);
@@ -55,8 +55,7 @@ void	ScalarConverter::fromInt(std::string const & str) {
 		std::cout << e.what() << std::endl;
 		return ;
 	}
-	std::cout << "Final res: " << res << std::endl;
-	// printConversions(val);
+	::printConversions<int>(res);
 }
 
 /*	FLOAT		*/
@@ -81,7 +80,6 @@ void	ScalarConverter::fromFloat(std::string const & str) {
 		std::cout << "Found wrong char before deicmal Point" << std::endl;
 		return ;
 	}
-	std::cout << "Valid float" << std::endl;
 }
 
 /*	DOUBLE		*/
@@ -111,28 +109,23 @@ void	ScalarConverter::fromDouble(std::string const & str) {
 /* Converter */
 
 static t_type	type_id(std::string const & str) {
-	
+
 	if (str.find_first_of('.') != str.npos) {
 		if (str.find_last_of('f') != str.npos) {
-			std::cout << "Float" << std::endl;
 			return (FLOAT);
 		}
 		else {
-			std::cout << "DOUBLE" << std::endl;
 			return (DOUBLE);
 		}
 	}
 	else {
 		if (str.size() == 1 && std::isalpha(str[0])) {
-      			std::cout << "Char" << std::endl;
 			return (CHAR);
 		}
 		else if (str.find_first_not_of("-1234567890") == str.npos) {
-			std::cout << "Int" << std::endl;
 			return (INT);
 		}
 	}
-	std::cout << "Unknown" << std::endl;
 	return (UNKNOWN);
 }
 
@@ -146,6 +139,8 @@ void	ScalarConverter::convert(std::string const & str) {
 	inputType = type_id(str);
 	if (inputType >= 0)
 		(funcPtrs[inputType](str));
+	else
+		std::cout << "Unknown type, please enter one of these -> [int, long, double, char]." << std::endl;
 }
 
 const char*	ScalarConverter::valueTooLargeException::what() const throw() { return ("Value is too big"); }
