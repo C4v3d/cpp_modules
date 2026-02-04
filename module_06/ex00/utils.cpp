@@ -2,7 +2,13 @@
 #include <string>
 #include <cstdlib>
 #include <cmath>
+#include <limits>
 #include "ScalarConverter.hpp"
+
+bool	safeIsPrint(int c) {
+	std::cout << c << std::endl;
+	return (c>=0x20 && c <= 0x7E);
+}
 
 std::string	trim(std::string const & src) {
 	std::string	res(src);
@@ -61,4 +67,11 @@ void	printN(std::string const & s) {
 	std::cout << "int: impossible" << std::endl;
 	std::cout << "float: " << static_cast<float>(nan(s.c_str())) << 'f' << std::endl;
 	std::cout << "double: " << static_cast<double>(nan(s.c_str())) << std::endl;
+}
+
+void	printInf() {
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: " << std::numeric_limits<int>::infinity() << std::endl;
+	std::cout << "float: " << std::numeric_limits<float>::infinity() << 'f' << std::endl;
+	std::cout << "double: " << std::numeric_limits<double>::infinity() << std::endl;
 }

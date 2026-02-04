@@ -66,14 +66,16 @@ void	ScalarConverter::fromFloat(std::string const & str) {
 }
 
 void	ScalarConverter::fromDouble(std::string const & str) {
-	double	res;
+	double res;
 	if (str == "nan") {
 		printN(str);
 		return ;
 	}
 	try {
 		decimalFormatChecker(str, DOUBLE);
-		res = std::atof(str.c_str());
+		res = std::atol(str.c_str());
+		std::cout << res << std::endl;
+		std::cout << std::numeric_limits<double>::max() << std::endl;
 		::printConversions(res);
 	} catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
@@ -99,13 +101,6 @@ static t_type	type_id(std::string const & str) {
 			return (INT);
 	}
 	return (UNKNOWN);
-}
-
-static void	printInf() {
-	std::cout << "char: impossible" << std::endl;
-	std::cout << "int: " << std::numeric_limits<int>::infinity() << std::endl;
-	std::cout << "float: " << std::numeric_limits<float>::infinity() << 'f' << std::endl;
-	std::cout << "double: " << std::numeric_limits<double>::infinity() << std::endl;
 }
 
 void	ScalarConverter::convert(std::string const & str) {
