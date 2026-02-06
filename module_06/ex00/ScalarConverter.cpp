@@ -1,9 +1,7 @@
 #include "ScalarConverter.hpp"
 
 #include <cstddef>
-#include <ostream>
 #include <string>
-#include <iostream>
 #include <cstdlib>
 #include <limits>
 
@@ -24,6 +22,8 @@ std::string	ScalarConverter::trim(std::string const & s) {
 }
 
 static t_type	type_id(std::string const & str) {
+	if (str == "nan" || str == "nanf")
+		return (DOUBLE);
 	if (str.find_first_of('.') != str.npos) {
 		if (str.find_last_of('f') != str.npos)
 			return (FLOAT);
@@ -51,6 +51,10 @@ void	convertInt(std::string & s) {
 void	convertDouble(std::string & s) {
 	double res;
 
+	if (s == "nan" || s == "nanf") {
+		printN(s);
+		return ;
+	}
 	decimalFormatChecker(s, DOUBLE);
 	res = std::strtod(s.c_str(), NULL);
 	if (!(res >= -std::numeric_limits<double>::max() && res <= std::numeric_limits<double>::max()))
@@ -63,7 +67,7 @@ void	convertFloat(std::string & s) {
 	
 	decimalFormatChecker(s.c_str(), FLOAT);
 	res = std::strtod(s.c_str(), NULL);
-	if (!(res >= -std::numeric_limits<float>::max() && res <= std::numeric_limits<float>::min()))
+	if (!(res >= -std::numeric_limits<float>::max() && res <= std::numeric_limits<float>::max()))
 		throw ScalarConverter::valueTooLargeException();
 	::printConversions(static_cast<float>(res));
 }
@@ -102,6 +106,4 @@ void	ScalarConverter::convert(std::string const & s) {
 }
 
 const char*	ScalarConverter::valueTooLargeException::what() const throw() { return ("Value is too big"); }
-
-/*	Use has_infinity to to check if data type is capable of representing infinity */
-/*	Same with has_quiet_NaN */
+const char*	ScalarConverter::incorrectFormatException::what() const throw() { return ("Incorrect format"); }

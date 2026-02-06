@@ -44,6 +44,7 @@ class ScalarConverter {
 public:
 	static void convert(std::string const & str);
 	class valueTooLargeException;
+	class incorrectFormatException;
 private:
 	ScalarConverter();
 	ScalarConverter(ScalarConverter const & other);
@@ -54,6 +55,11 @@ private:
 };
 
 class ScalarConverter::valueTooLargeException : public std::exception {
+public:
+	const char*	what() const throw();
+};
+
+class ScalarConverter::incorrectFormatException : public std::exception {
 public:
 	const char*	what() const throw();
 };

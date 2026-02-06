@@ -37,28 +37,18 @@ void	decimalFormatChecker(std::string const & str, t_type type) {
 	size_t	decimalPos = str.find_first_of('.');
 	size_t	fFlag;
 
-	if (minusSign > 0 && minusSign != str.npos) {
-		std::cout << "Found minus sign in the wrong pos" << std::endl;
-		throw (ScalarConverter::valueTooLargeException());
-	}
-	if (decimalPos == 0 || decimalPos == str.size() - 1) {
-		std::cout << "incorrect Double format!" << std::endl;
-		throw (ScalarConverter::valueTooLargeException());
-	}
-	if (str.find_first_not_of(NUMSET) != decimalPos) {
-		std::cout << "Incorrect Double format!" << std::endl;
-		throw (ScalarConverter::valueTooLargeException());
-	}
-	if (type == DOUBLE && str.find_first_not_of (NUMSET, decimalPos + 1) != str.npos) {
-		std::cout << "Incorrect Double format!" << std::endl;
-		throw (ScalarConverter::valueTooLargeException());
-	}
+	if (minusSign > 0 && minusSign != str.npos)
+		throw (ScalarConverter::incorrectFormatException());
+	if (decimalPos == 0 || decimalPos == str.size() - 1)
+		throw (ScalarConverter::incorrectFormatException());
+	if (str.find_first_not_of(NUMSET) != decimalPos)
+		throw (ScalarConverter::incorrectFormatException());
+	if (type == DOUBLE && str.find_first_not_of (NUMSET, decimalPos + 1) != str.npos)
+		throw (ScalarConverter::incorrectFormatException());
 	if (type == FLOAT) {
 		fFlag = str.find_first_not_of(NUMSET, decimalPos + 1);
-		if (fFlag != str.size() - 1 || str[fFlag] != 'f' || fFlag - 1 == decimalPos) {
-			std::cout << "Found wrong char before deicmal Point" << std::endl;
-			throw (ScalarConverter::valueTooLargeException());
-		}
+		if (fFlag != str.size() - 1 || str[fFlag] != 'f' || fFlag - 1 == decimalPos)
+			throw (ScalarConverter::incorrectFormatException());
 	}
 }
 
