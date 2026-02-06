@@ -1,17 +1,11 @@
 #include "ScalarConverter.hpp"
 
+#include <cstddef>
 #include <ostream>
 #include <string>
 #include <iostream>
 #include <cstdlib>
 #include <limits>
-
-void (*ScalarConverter::funcPtrs[4])(std::string const &) = {
-	&ScalarConverter::fromChar,
-	&ScalarConverter::fromInt,
-	&ScalarConverter::fromFloat,
-	&ScalarConverter::fromDouble
-};
 
 ScalarConverter::ScalarConverter() {};
 
@@ -21,73 +15,15 @@ ScalarConverter& ScalarConverter::operator=(ScalarConverter const & other) {retu
 
 ScalarConverter::~ScalarConverter() {};
 
-void	ScalarConverter::fromChar(std::string const & str) {
-	std::string::const_iterator  it=str.begin();
-	::printConversions(*it);
-}
+std::string	ScalarConverter::trim(std::string const & s) {
+	std::string	ret(s);
 
-void	ScalarConverter::fromInt(std::string const & str) {
-	int	res;
-	size_t	minusSign = str.find_last_of('-');
-
-	if (minusSign > 0 && minusSign != str.npos) {
-		std::cout << "Wronf integer format" << std::endl;
-		return ;
-	}
-	if (str.size() > 10 && minusSign != 0) {
-		std::cout << "Value too Large" << std::endl;
-		return ;
-	}
-	try {
-		res = safeAtoi(str);
-	} catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-		return ;
-	}
-	::printConversions<int>(res);
-}
-
-void	ScalarConverter::fromFloat(std::string const & str) {
-	float	res = 0;
-
-	if (str == "nanf") {
-		printN(str);
-		return ;
-	}
-	try {
-		decimalFormatChecker(str, FLOAT);
-		std::string	s(str);
-		s.erase(s.find_last_of('f'));
-		res = std::atof(s.c_str());
-		::printConversions(res);
-	} catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-	}
-}
-
-void	ScalarConverter::fromDouble(std::string const & str) {
-	double res;
-	if (str == "nan") {
-		printN(str);
-		return ;
-	}
-	try {
-		decimalFormatChecker(str, DOUBLE);
-		res = std::atol(str.c_str());
-		std::cout << res << std::endl;
-		std::cout << std::numeric_limits<double>::max() << std::endl;
-		::printConversions(res);
-	} catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-	}
+	ret.erase(0,ret.find_first_not_of(" \n\r\t"));
+	ret.erase(ret.find_last_not_of(" \n\r\t") + 1);
+	return (ret);
 }
 
 static t_type	type_id(std::string const & str) {
-
-	if (str == "nan")
-		return (DOUBLE);
-	if (str == "nanf")
-		return (FLOAT);
 	if (str.find_first_of('.') != str.npos) {
 		if (str.find_last_of('f') != str.npos)
 			return (FLOAT);
@@ -95,7 +31,7 @@ static t_type	type_id(std::string const & str) {
 			return (DOUBLE);
 	}
 	else {
-		if (str.size() == 1 && std::isalpha(str[0]))
+		if (str.size() == 1 && std::isprint(str[0]))
 			return (CHAR);
 		else if (str.find_first_not_of("-1234567890") == str.npos)
 			return (INT);
@@ -103,23 +39,69 @@ static t_type	type_id(std::string const & str) {
 	return (UNKNOWN);
 }
 
-void	ScalarConverter::convert(std::string const & str) {
-	t_type	inputType;
+void	convertInt(std::string & s) {
+	double	res;
 
-	if (str.empty()) {
+	res = std::strtod(s.c_str(), NULL);
+	if (!(res >= std::numeric_limits<int>::min() && res <= std::numeric_limits<int>::max()))
+		throw ScalarConverter::valueTooLargeException();
+	::printConversions(static_cast<int>(res));
+}
+
+void	convertDouble(std::string & s) {
+	double res;
+
+	decimalFormatChecker(s, DOUBLE);
+	res = std::strtod(s.c_str(), NULL);
+	if (!(res >= -std::numeric_limits<double>::max() && res <= std::numeric_limits<double>::max()))
+		throw ScalarConverter::valueTooLargeException();
+	::printConversions(static_cast<double>(res));
+}
+
+void	convertFloat(std::string & s) {
+	double res;
+	
+	decimalFormatChecker(s.c_str(), FLOAT);
+	res = std::strtod(s.c_str(), NULL);
+	if (!(res >= -std::numeric_limits<float>::max() && res <= std::numeric_limits<float>::min()))
+		throw ScalarConverter::valueTooLargeException();
+	::printConversions(static_cast<float>(res));
+}
+
+void	ScalarConverter::convert(std::string const & s) {
+	double	res;
+
+	if (s.empty()) {
 		std::cout << "String empty" << std::endl;
 		return ;
 	}
-	if (str == "+inff" || str == "-inff" || str == "+inf" || str == "-inf") {
-		printInf();
-		return ;
+	std::string	tmp(trim(s));
+	try {
+		switch (type_id(tmp)) {
+			case CHAR:
+				::printConversions(*s.begin());
+				break;
+			case INT:
+				convertInt(tmp);
+				break;
+			case FLOAT:
+				convertFloat(tmp);
+				break;
+			case DOUBLE:
+				convertDouble(tmp);
+				break;
+			default:
+				std::cout << "UNKNOWN" << std::endl;
+		}
 	}
-	std::string	s(trim(str));
-	inputType = type_id(s);
-	if (inputType >= 0)
-		(funcPtrs[inputType](s));
-	else
-		std::cout << "Unknown type, please enter one of these -> [int, long, double, char]." << std::endl;
+	catch(std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+	res = strtod(s.c_str(), NULL);
+	(void)res;
 }
 
 const char*	ScalarConverter::valueTooLargeException::what() const throw() { return ("Value is too big"); }
+
+/*	Use has_infinity to to check if data type is capable of representing infinity */
+/*	Same with has_quiet_NaN */

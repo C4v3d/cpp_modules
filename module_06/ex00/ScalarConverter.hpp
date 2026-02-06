@@ -3,7 +3,8 @@
 
 #include <string>
 #include <iostream>
-#include <limits.h>
+#include <limits>
+#include <iomanip>
 
 #define NUMSET "-1234567890"
 
@@ -23,18 +24,22 @@ void		printInf();
 bool		safeIsPrint(int c);
 
 template <typename T> void printConversions(T const &x) {
-	if (safeIsPrint(x))
+	std::cout << std::fixed << std::setprecision(1);
+	if (std::isprint(x))
 		std::cout << "char: " << static_cast<char>(x) << std::endl;
 	else
-		std::cout << "Non displayable" << std::endl;
-	if (x > INT_MAX)
-		std::cout << "int: Impossible" << std::endl;
-	else
-		std::cout << "int: " << static_cast<int>(x) << std::endl;
-	std::cout << "float: " << static_cast<float>(x) << 'f' << std::endl;
-	std::cout << "double: " << static_cast<double>(x) << std::endl;
-}
+		std::cout << "char: Non displayable" << std::endl;
 
+	if (x >= std::numeric_limits<int>::min() && x <= std::numeric_limits<int>::max())
+		std::cout << "int: " << static_cast<int>(x) << std::endl;
+
+	if (x >= -std::numeric_limits<float>::max() && x <= std::numeric_limits<float>::max())
+		std::cout << "float: " << static_cast<float>(x) << 'f' << std::endl;
+
+	if (x >= -std::numeric_limits<double>::max() && x <= std::numeric_limits<double>::max())
+		std::cout << "double: " << static_cast<double>(x) << std::endl;
+
+}
 class ScalarConverter {
 public:
 	static void convert(std::string const & str);
@@ -45,12 +50,7 @@ private:
 	ScalarConverter& operator=(ScalarConverter const & other);
 	~ScalarConverter();
 
-	static void	fromChar(std::string const & str);
-	static void	fromInt(std::string const & str);
-	static void	fromFloat(std::string const & str);
-	static void	fromDouble(std::string const & str);
-
-	static void (*funcPtrs[4])(std::string const &);
+	static std::string	trim(std::string const & s);
 };
 
 class ScalarConverter::valueTooLargeException : public std::exception {
