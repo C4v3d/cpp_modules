@@ -20,7 +20,7 @@ std::string trim(std::string const & src);
 int			safeAtoi(std::string str);
 void		decimalFormatChecker(std:: string const & str, t_type type);
 void		printN(std::string const & s);
-void		printInf();
+void		printInf(int f);
 bool		safeIsPrint(int c);
 
 template <typename T> void printConversions(T const &x) {

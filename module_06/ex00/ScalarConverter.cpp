@@ -22,7 +22,9 @@ std::string	ScalarConverter::trim(std::string const & s) {
 }
 
 static t_type	type_id(std::string const & str) {
-	if (str == "nan" || str == "nanf")
+	if ((str == "nan" || str == "nanf")
+		|| (str == "inf" || str == "-inf")
+		|| (str == "inff" || str == "-inff"))
 		return (DOUBLE);
 	if (str.find_first_of('.') != str.npos) {
 		if (str.find_last_of('f') != str.npos)
@@ -51,15 +53,19 @@ void	convertInt(std::string & s) {
 void	convertDouble(std::string & s) {
 	double res;
 
-	if (s == "nan" || s == "nanf") {
+	if (s == "inf" || s == "inff")
+		printInf(0);
+	else if (s == "-inf" ||s == "-inff")
+		printInf(1);
+	else if (s == "nan" || s == "nanf")
 		printN(s);
-		return ;
+	else {
+		decimalFormatChecker(s, DOUBLE);
+		res = std::strtod(s.c_str(), NULL);
+		if (!(res >= -std::numeric_limits<double>::max() && res <= std::numeric_limits<double>::max()))
+			throw ScalarConverter::valueTooLargeException();
+		::printConversions(static_cast<double>(res));
 	}
-	decimalFormatChecker(s, DOUBLE);
-	res = std::strtod(s.c_str(), NULL);
-	if (!(res >= -std::numeric_limits<double>::max() && res <= std::numeric_limits<double>::max()))
-		throw ScalarConverter::valueTooLargeException();
-	::printConversions(static_cast<double>(res));
 }
 
 void	convertFloat(std::string & s) {
