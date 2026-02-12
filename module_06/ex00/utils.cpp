@@ -5,11 +5,6 @@
 #include <limits>
 #include "ScalarConverter.hpp"
 
-bool	safeIsPrint(int c) {
-	std::cout << c << std::endl;
-	return (c>=0x20 && c <= 0x7E);
-}
-
 std::string	trim(std::string const & src) {
 	std::string	res(src);
 

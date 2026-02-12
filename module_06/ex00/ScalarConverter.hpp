@@ -23,28 +23,12 @@ void		printN(std::string const & s);
 void		printInf(int f);
 bool		safeIsPrint(int c);
 
-template <typename T> void printConversions(T const &x) {
-	std::cout << std::fixed << std::setprecision(1);
-	if (std::isprint(x))
-		std::cout << "char: " << static_cast<char>(x) << std::endl;
-	else
-		std::cout << "char: Non displayable" << std::endl;
-
-	if (x >= std::numeric_limits<int>::min() && x <= std::numeric_limits<int>::max())
-		std::cout << "int: " << static_cast<int>(x) << std::endl;
-
-	if (x >= -std::numeric_limits<float>::max() && x <= std::numeric_limits<float>::max())
-		std::cout << "float: " << static_cast<float>(x) << 'f' << std::endl;
-
-	if (x >= -std::numeric_limits<double>::max() && x <= std::numeric_limits<double>::max())
-		std::cout << "double: " << static_cast<double>(x) << std::endl;
-
-}
 class ScalarConverter {
 public:
 	static void convert(std::string const & str);
 	class valueTooLargeException;
 	class incorrectFormatException;
+	class impossibleConversionException;
 private:
 	ScalarConverter();
 	ScalarConverter(ScalarConverter const & other);
@@ -60,6 +44,11 @@ public:
 };
 
 class ScalarConverter::incorrectFormatException : public std::exception {
+public:
+	const char*	what() const throw();
+};
+
+class ScalarConverter::impossibleConversionException : public std::exception {
 public:
 	const char*	what() const throw();
 };

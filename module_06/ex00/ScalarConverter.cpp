@@ -1,4 +1,5 @@
 #include "ScalarConverter.hpp"
+#include "templates.hpp"
 
 #include <cstddef>
 #include <string>
@@ -41,17 +42,28 @@ static t_type	type_id(std::string const & str) {
 	return (UNKNOWN);
 }
 
-void	convertInt(std::string & s) {
-	double	res;
+// void	convertInt(std::string & s) {
+// 	double	res;
+// 	char	*endPtr;
 
-	res = std::strtod(s.c_str(), NULL);
-	if (!(res >= std::numeric_limits<int>::min() && res <= std::numeric_limits<int>::max()))
-		throw ScalarConverter::valueTooLargeException();
-	::printConversions(static_cast<int>(res));
+// 	res = std::strtod(s.c_str(), &endPtr);
+// 	if (endPtr == s)
+// 		std::cout << "BAD" << std::endl;
+// 	if (!(res >= -std::numeric_limits<int>::max() && res <= std::numeric_limits<int>::max())) {
+// 		throw ScalarConverter::valueTooLargeException();
+// 	}
+// 	::printConversions(static_cast<int>(res));
+// }
+
+void	convertInt(std::string & s) {
+	double	tmp = std::strtod(s.c_str(), NULL);
+	int	res = 0;
+	::dynamicConversion(tmp, res);
 }
 
 void	convertDouble(std::string & s) {
-	double res;
+	double	tmp;
+	double	res = 0;
 
 	if (s == "inf" || s == "inff")
 		printInf(0);
@@ -61,26 +73,23 @@ void	convertDouble(std::string & s) {
 		printN(s);
 	else {
 		decimalFormatChecker(s, DOUBLE);
-		res = std::strtod(s.c_str(), NULL);
-		if (!(res >= -std::numeric_limits<double>::max() && res <= std::numeric_limits<double>::max()))
-			throw ScalarConverter::valueTooLargeException();
-		::printConversions(static_cast<double>(res));
+		tmp = std::strtod(s.c_str(), NULL);
+		::dynamicConversion(tmp, res);
 	}
 }
 
 void	convertFloat(std::string & s) {
-	double res;
+	double	tmp;
+	float res = 0;
 	
 	decimalFormatChecker(s.c_str(), FLOAT);
-	res = std::strtod(s.c_str(), NULL);
-	if (!(res >= -std::numeric_limits<float>::max() && res <= std::numeric_limits<float>::max()))
-		throw ScalarConverter::valueTooLargeException();
-	::printConversions(static_cast<float>(res));
+	tmp = std::strtod(s.c_str(), NULL);
+	::dynamicConversion(tmp, res);
 }
 
-void	ScalarConverter::convert(std::string const & s) {
-	double	res;
 
+
+void	ScalarConverter::convert(std::string const & s) {
 	if (s.empty()) {
 		std::cout << "String empty" << std::endl;
 		return ;
@@ -107,9 +116,8 @@ void	ScalarConverter::convert(std::string const & s) {
 	catch(std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
-	res = strtod(s.c_str(), NULL);
-	(void)res;
 }
 
 const char*	ScalarConverter::valueTooLargeException::what() const throw() { return ("Value is too big"); }
 const char*	ScalarConverter::incorrectFormatException::what() const throw() { return ("Incorrect format"); }
+const char*	ScalarConverter::impossibleConversionException::what() const throw() { return ("Conversion is impossible"); }
