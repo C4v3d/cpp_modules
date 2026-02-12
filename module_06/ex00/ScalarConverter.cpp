@@ -4,7 +4,6 @@
 #include <cstddef>
 #include <string>
 #include <cstdlib>
-#include <limits>
 
 ScalarConverter::ScalarConverter() {};
 
@@ -41,19 +40,6 @@ static t_type	type_id(std::string const & str) {
 	}
 	return (UNKNOWN);
 }
-
-// void	convertInt(std::string & s) {
-// 	double	res;
-// 	char	*endPtr;
-
-// 	res = std::strtod(s.c_str(), &endPtr);
-// 	if (endPtr == s)
-// 		std::cout << "BAD" << std::endl;
-// 	if (!(res >= -std::numeric_limits<int>::max() && res <= std::numeric_limits<int>::max())) {
-// 		throw ScalarConverter::valueTooLargeException();
-// 	}
-// 	::printConversions(static_cast<int>(res));
-// }
 
 void	convertInt(std::string & s) {
 	double	tmp = std::strtod(s.c_str(), NULL);
