@@ -33,7 +33,7 @@ static t_type	type_id(std::string const & str) {
 			return (DOUBLE);
 	}
 	else {
-		if (str.size() == 1 && std::isprint(str[0]))
+		if (str.size() == 1 && std::isprint(str[0]) && str[0] > '9')
 			return (CHAR);
 		else if (str.find_first_not_of("-1234567890") == str.npos)
 			return (INT);
@@ -67,7 +67,7 @@ void	convertDouble(std::string & s) {
 void	convertFloat(std::string & s) {
 	double	tmp;
 	float res = 0;
-	
+
 	decimalFormatChecker(s.c_str(), FLOAT);
 	tmp = std::strtod(s.c_str(), NULL);
 	::dynamicConversion(tmp, res);

@@ -32,15 +32,33 @@ void	identify(Base * p) {
 		std::cout << "Type is C" << std::endl;
 }
 
-void identify(Base & p) {
-	Base *base = &p;
-	if (dynamic_cast<A*>(base))
-		std::cout << "Type is A" << std::endl;
-	else if (dynamic_cast<B*>(base))
-		std::cout << "Type is B" << std::endl;
-	else
-		std::cout << "Type is C" << std::endl;
+//void identify(Base & p) {
+//	Base *base = &p;
+//	if (dynamic_cast<A*>(base))
+//		std::cout << "Type is A" << std::endl;
+//	else if (dynamic_cast<B*>(base))
+//		std::cout << "Type is B" << std::endl;
+//	else
+//		std::cout << "Type is C" << std::endl;
+//
+//}
 
+void	identify(Base & p) {
+	try {
+		A & a = dynamic_cast<A&>(p);
+		(void)a;
+		std::cout << "Type is A" << std::endl;
+	} catch (...) {}
+	try {
+		B & b = dynamic_cast<B&>(p);
+		(void)b;
+		std::cout << "Type is B" << std::endl;
+	} catch (...) {}
+	try {
+		C & c = dynamic_cast<C&>(p);
+		(void)c;
+		std::cout << "Type is C" << std::endl;
+	} catch (...) {}
 }
 
 int	main(void) {

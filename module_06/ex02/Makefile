@@ -5,9 +5,6 @@ BUILD_PATH = build
 
 SRC = main.cpp\
       Base.cpp \
-      A.cpp \
-      B.cpp \
-      C.cpp
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
