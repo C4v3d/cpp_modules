@@ -4,6 +4,7 @@ CXXFLAGS = -std=c++98 -Wall -Werror -Wextra
 BUILD_PATH = build
 
 SRC = main.cpp\
+      Foo.cpp \
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 

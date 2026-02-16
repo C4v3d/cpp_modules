@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdexcept>
+#include <ostream>
 
 template < typename T >
 class Array {
@@ -14,9 +15,11 @@ class Array {
 		~Array();
 
 		T & operator[](unsigned int const & pos);
+		const T & operator[](unsigned int const & pos) const;
 
-		const unsigned int & getSize() const;
+		size_t getSize() const;
 
+		void	printArray() const;
 	private:
 		unsigned int	_size;
 		T * rawArray;
@@ -40,7 +43,7 @@ Array<T> & Array<T>::operator=(Array<T> const & other) {
 		delete [] this->rawArray;
 	this->_size = other._size;
 	this->rawArray = new T[this->_size];
-	for (int i = 0; i < this->_size; i++) {
+	for (size_t i = 0; i < this->_size; i++) {
 		this->rawArray[i] = other.rawArray[i];
 	}
 	return (*this);
@@ -51,14 +54,30 @@ Array<T>::~Array() { delete [] this->rawArray; }
 
 template < typename T>
 T & Array<T>::operator[](unsigned int const & pos) {
-	if (pos > this->_size)
+	if (pos >= this->_size)
 		throw std::out_of_range("Index is out of range !");
 	return this->rawArray[pos];
 }
 
+template < typename T>
+const T & Array<T>::operator[](unsigned int const & pos) const{
+	if (pos >= this->_size)
+		throw std::out_of_range("Index is out of range !");
+	return this->rawArray[pos];
+}
+
+template <typename T>
+std::ostream & operator<<( std::ostream & os, const Array<T> & array ) {
+    os << "[";
+    size_t size = array.getSize();
+    for( size_t i = 0; i < size; ++i ) {
+        os << array[i];
+        if (i < size - 1) os << ", ";
+    }
+    return os << "]";
+}
 
 template < typename T>
-const unsigned int  & Array<T>::getSize() const { return (_size); }
-
+size_t Array<T>::getSize() const { return (_size); }
 
 #endif
