@@ -19,7 +19,6 @@ class Array {
 
 		size_t getSize() const;
 
-		void	printArray() const;
 	private:
 		unsigned int	_size;
 		T * rawArray;
@@ -67,10 +66,10 @@ const T & Array<T>::operator[](unsigned int const & pos) const{
 }
 
 template <typename T>
-std::ostream & operator<<( std::ostream & os, const Array<T> & array ) {
+std::ostream & operator<<(std::ostream & os, const Array<T> & array) {
     os << "[";
     size_t size = array.getSize();
-    for( size_t i = 0; i < size; ++i ) {
+    for(size_t i = 0; i < size; ++i) {
         os << array[i];
         if (i < size - 1) os << ", ";
     }

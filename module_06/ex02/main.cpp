@@ -10,7 +10,6 @@ Base*	generate(void) {
 	srand(time(0));
 	int	r = rand() % 3;
 
-	std::cout << r << std::endl;
 	switch(r) {
 		case 0:
 			return (new(A));
@@ -31,17 +30,6 @@ void	identify(Base * p) {
 	else
 		std::cout << "Type is C" << std::endl;
 }
-
-//void identify(Base & p) {
-//	Base *base = &p;
-//	if (dynamic_cast<A*>(base))
-//		std::cout << "Type is A" << std::endl;
-//	else if (dynamic_cast<B*>(base))
-//		std::cout << "Type is B" << std::endl;
-//	else
-//		std::cout << "Type is C" << std::endl;
-//
-//}
 
 void	identify(Base & p) {
 	try {

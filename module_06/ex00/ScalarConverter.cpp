@@ -96,7 +96,7 @@ void	ScalarConverter::convert(std::string const & s) {
 				convertDouble(tmp);
 				break;
 			default:
-				std::cout << "UNKNOWN" << std::endl;
+				std::cout << "Unknown type !" << std::endl;
 		}
 	}
 	catch(std::exception & e) {
