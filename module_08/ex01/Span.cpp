@@ -33,6 +33,20 @@ void	Span::longestSpan() const {
 	std::vector<int>::const_iterator end = vec.end();
 	std::cout << "Biggest Span: " << *(std::max_element(begin, end)) - *(std::min_element(begin, end)) << std::endl;
 }
+
+void  Span::shortestSpan() const {
+  if (vec.empty() || _curSize == 1)
+    throw ;
+  std::vector<int>::const_iterator begin = vec.begin();
+  std::vector<int>::const_iterator end = vec.end();
+  std::vector<int>::const_iterator smallest = std::min_element(begin, end);
+  std::vector<int>::const_iterator tmp = std::min_element(smallest + 1, end);
+  std::cout << "Smallest: " << *smallest << std::endl;
+  std::cout << "tmp: " << *tmp << std::endl;
+  std::cout << "Smallest Span: " << *(tmp) - *(smallest) << std::endl;
+
+}
+
 const char* Span::VecIsFullException::what() const throw() { return "Vec is vect.full" ;}
 
 std::ostream& operator<<(std::ostream & os, Span s) {

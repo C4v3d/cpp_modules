@@ -25,4 +25,5 @@ int main(void) {
 	 } catch (std::exception & e) { std::cout <<  e.what() << std::endl; }
 	 std::cout << span1 << std::endl;
 	span1.longestSpan();
+  span1.shortestSpan();
 }
