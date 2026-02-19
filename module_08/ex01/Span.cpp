@@ -1,5 +1,6 @@
 #include "Span.hpp"
 #include <iostream>
+#include <algorithm>
 
 Span::Span(): _maxSize(3), _curSize(0) {}
 Span::Span(unsigned int const & N): _maxSize(N), _curSize(0) {}
@@ -25,6 +26,13 @@ void  Span::addNumber(int const & num) {
   this->_curSize++;
 }
 
+void	Span::longestSpan() const {
+	if  (vec.empty() || _curSize == 1)
+		throw ;
+	std::vector<int>::const_iterator begin = vec.begin();
+	std::vector<int>::const_iterator end = vec.end();
+	std::cout << "Biggest Span: " << *(std::max_element(begin, end)) - *(std::min_element(begin, end)) << std::endl;
+}
 const char* Span::VecIsFullException::what() const throw() { return "Vec is vect.full" ;}
 
 std::ostream& operator<<(std::ostream & os, Span s) {
