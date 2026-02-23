@@ -1,10 +1,10 @@
 #include "Span.hpp"
 #include <iostream>
+#include <cstdlib>
 
-int main(void) {
-	Span  span1(3);
+void  basic(void) {
+  Span  span1(3);
 
-  /* Basic tests */
   std::cout << "span1: \n" << std::endl;
   std::cout << span1 << std::endl;
   try {
@@ -21,8 +21,6 @@ int main(void) {
     span1.addNumber(4);
   } catch(std::exception & e) { std::cout << e.what() << std::endl; }
   std::cout << span1 << std::endl;
-  /*--------*/
-  /* Basic methods */
   std::cout << "Longest span: " << span1.longestSpan() << std::endl;
   std::cout << "Shortest span: " << span1.shortestSpan() << std::endl;
   std::cout << "Shortest and longest Span with empty or only 1 element" << std::endl;
@@ -37,5 +35,47 @@ int main(void) {
     span2.addNumber(2);
     span2.longestSpan();
   } catch (std::exception & e) { std::cout << e.what() << std::endl; }
-  /* ------------ */
+
+  std::cout << "With negative values !" << std::endl;
+  Span n(3);
+
+  n.addNumber(-1);
+  n.addNumber(-42);
+  n.addNumber(32);
+
+  std::cout << n << std::endl;
+  std::cout << "longest Span: " << n.longestSpan() << std::endl;
+  std::cout << "shortestSpan: " << n.shortestSpan() << std::endl;
 }
+
+void  multipleAdd(void) {
+  Span  span(1);
+  std::vector<int> v(100, 1);
+  try {
+    span.multiAdd(v.begin(), v.end());
+  } catch (std::exception & e) { std::cout << e.what() << std::endl; }
+  std::cout << span << std::endl;
+  Span  span1(100);
+  try {
+    span1.multiAdd(v.begin(), v.end());
+  } catch (std::exception & e) { std::cout << e.what() << std::endl; }
+  std::cout <<  span1 << std::endl;
+}
+
+void  hugeSpan(void) {
+  Span span(100000);
+  std::vector<int>  v;
+  for(int i = 0; i < 100000; i++) {
+      v.push_back(rand());
+  }
+  span.multiAdd(v.begin(), v.end());
+  std::cout << "Biggest span: " << span.longestSpan() << std::endl;
+  std::cout << "smallest span: " << span.shortestSpan() << std::endl;
+}
+
+int main(void) {
+  basic();
+  multipleAdd();
+  hugeSpan();
+}
+

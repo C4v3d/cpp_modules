@@ -32,7 +32,7 @@ void	Span::multiAdd(std::vector<int>::iterator begin, std::vector<int>::iterator
 {
   unsigned int len = std::distance(begin, end);
 	if (vec.size() + len > _maxSize)
-    throw std::overflow_error("single overflow");
+    throw std::overflow_error("Overflow ! not enough space.");
 	vec.insert(vec.end(), begin, end);
   std::cout << "Values inserted !" << std::endl;
 }
