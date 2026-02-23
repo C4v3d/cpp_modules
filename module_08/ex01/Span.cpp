@@ -1,58 +1,61 @@
 #include "Span.hpp"
 #include <iostream>
 #include <algorithm>
+#include <stdexcept>	
 
-Span::Span(): _maxSize(3), _curSize(0) {}
-Span::Span(unsigned int const & N): _maxSize(N), _curSize(0) {}
+Span::Span():
+  _maxSize(3)
+{}
+
+Span::Span(unsigned int const & N):
+  _maxSize(N)
+{}
+
 Span::Span(Span const & other) { *this = other; }
 Span& Span::operator=(Span const & other) {
   if (this != &other) {
-    this->_maxSize = other._maxSize;
-    this->_curSize = other._curSize;
-    this->vec = other.vec;
+    _maxSize = other._maxSize;
+    vec = other.vec;
   }
   return (*this);
 }
 Span::~Span() {}
 
-const unsigned int& Span::getCurSize() const { return this->_curSize; }
-
-const unsigned int& Span::getMaxSize() const { return this->_maxSize; }
-
 void  Span::addNumber(int const & num) {
-  if (_curSize >= this->_maxSize)
-    throw Span::VecIsFullException();
-  this->vec.push_back(num);
-  this->_curSize++;
+  if (vec.size() >= _maxSize)
+    throw std::overflow_error("overflow");
+  vec.push_back(num);
+  std::cout << "Value added !" << std::endl;
 }
 
-void	Span::longestSpan() const {
-	if  (vec.empty() || _curSize == 1)
-		throw ;
-	std::vector<int>::const_iterator begin = vec.begin();
-	std::vector<int>::const_iterator end = vec.end();
-	std::cout << "Biggest Span: " << *(std::max_element(begin, end)) - *(std::min_element(begin, end)) << std::endl;
+void	Span::multiAdd(std::vector<int>::iterator begin, std::vector<int>::iterator end)
+{
+  unsigned int len = std::distance(begin, end);
+	if (vec.size() + len > _maxSize)
+    throw std::overflow_error("single overflow");
+	vec.insert(vec.end(), begin, end);
+  std::cout << "Values inserted !" << std::endl;
 }
 
-void  Span::shortestSpan() const {
-  if (vec.empty() || _curSize == 1)
-    throw ;
+int	Span::longestSpan() const {
+	if  (vec.empty() ||  vec.size() == 1)
+		throw std::out_of_range("oor");
   std::vector<int>::const_iterator begin = vec.begin();
-  std::vector<int>::const_iterator end = vec.end();
-  std::vector<int>::const_iterator smallest = std::min_element(begin, end);
-  std::vector<int>::const_iterator tmp = std::min_element(smallest + 1, end);
-  std::cout << "Smallest: " << *smallest << std::endl;
-  std::cout << "tmp: " << *tmp << std::endl;
-  std::cout << "Smallest Span: " << *(tmp) - *(smallest) << std::endl;
-
+	std::vector<int>::const_iterator end = vec.end();
+  return (*(std::max_element(begin, end)) - *(std::min_element(begin, end)));
 }
 
-const char* Span::VecIsFullException::what() const throw() { return "Vec is vect.full" ;}
+int Span::shortestSpan() const {
+  if (vec.empty() || vec.size() == 1)
+    throw std::out_of_range("oor");
+  std::vector<int>  tmp(vec);
+  std::sort(tmp.begin(), tmp.end());
+  std::vector<int>::iterator smallest = std::min_element(tmp.begin(), tmp.end());
+  return (*std::min_element(smallest + 1, tmp.end()) - *smallest);
+}
 
 std::ostream& operator<<(std::ostream & os, Span s) {
   std::vector<int>::iterator end = s.vec.end();
-  os << "Max size: " << s.getMaxSize();
-  os << " Current size: " << s.getCurSize() << "\n";
   for (std::vector<int>::iterator it = s.vec.begin(); it != end; it++)
     os << *it << ' ';
   os << '\n';
