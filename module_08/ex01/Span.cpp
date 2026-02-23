@@ -39,7 +39,7 @@ void	Span::multiAdd(std::vector<int>::iterator begin, std::vector<int>::iterator
 
 int	Span::longestSpan() const {
 	if  (vec.empty() ||  vec.size() == 1)
-		throw std::out_of_range("oor");
+		throw std::out_of_range("Not enough element for a comparison.");
   std::vector<int>::const_iterator begin = vec.begin();
 	std::vector<int>::const_iterator end = vec.end();
   return (*(std::max_element(begin, end)) - *(std::min_element(begin, end)));
@@ -47,7 +47,7 @@ int	Span::longestSpan() const {
 
 int Span::shortestSpan() const {
   if (vec.empty() || vec.size() == 1)
-    throw std::out_of_range("oor");
+    throw std::out_of_range("Not enough element for a comparison.");
   std::vector<int>  tmp(vec);
   std::sort(tmp.begin(), tmp.end());
   std::vector<int>::iterator smallest = std::min_element(tmp.begin(), tmp.end());
