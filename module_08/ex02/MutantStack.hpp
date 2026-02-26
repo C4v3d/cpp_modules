@@ -15,10 +15,18 @@ public:
 	MutantStack&	operator=(MutantStack const & other);
 	~MutantStack();
 
-	typedef typename MutantStack<T>::container_type::iterator	it;
+	typedef typename MutantStack<T>::container_type::iterator	iterator;
+	typedef typename MutantStack<T>::container_type::const_iterator	const_iterator;
 
-	it	begin();
-	it	end();
+
+	iterator		begin();
+	iterator		end();
+	iterator		rbegin();
+	iterator		rend();
+	const_iterator		cbegin() const;
+	const_iterator		cend() const;
+	const_iterator		crbegin() const;
+	const_iterator		crend() const;
 };
 
 
@@ -29,15 +37,37 @@ template < typename T >
 MutantStack<T>::MutantStack(MutantStack const & other): std::stack<T>::stack(other) {}
 
 template < typename T >
-MutantStack<T>&	MutantStack<T>::operator=(MutantStack const & other) { return *this; }
+MutantStack<T>&	MutantStack<T>::operator=(MutantStack const & other) {
+	if (this != &other) {}
+	return *this;
+}
 
 template < typename T >
 MutantStack<T>::~MutantStack() {}
 
 template < typename T >
-typename MutantStack<T>::it	MutantStack<T>::begin() { return this->c.begin(); }
+typename MutantStack<T>::iterator		MutantStack<T>::begin() { return this->c.begin(); }
+
+template < typename T >
+typename MutantStack<T>::iterator		MutantStack<T>::rbegin() { return this->c.rbegin(); }
+
+template < typename T >
+typename MutantStack<T>::const_iterator	MutantStack<T>::crbegin() const { return this->c.rbegin(); }
+
+template < typename T >
+typename MutantStack<T>::const_iterator	MutantStack<T>::cbegin() const { return this->c.begin(); }
+
 
 template < typename T>
-typename MutantStack<T>::it	MutantStack<T>::end() { return this->c.end(); }
+typename MutantStack<T>::iterator		MutantStack<T>::end() { return this->c.end(); }
+
+template < typename T>
+typename MutantStack<T>::const_iterator	MutantStack<T>::cend() const { return this->c.end(); }
+
+template < typename T>
+typename MutantStack<T>::iterator		MutantStack<T>::rend() { return this->c.rend(); }
+
+template < typename T>
+typename MutantStack<T>::const_iterator	MutantStack<T>::crend() const { return this->c.rend(); }
 
 #endif
