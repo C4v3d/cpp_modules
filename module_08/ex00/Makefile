@@ -7,7 +7,7 @@ SRC = main.cpp\
 
 OBJ = $(SRC:%.cpp=$(BUILD_PATH)/%.o)
 
-NAME = templates
+NAME = easyfind
 
 all: $(NAME)
 
